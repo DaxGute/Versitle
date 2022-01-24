@@ -1,0 +1,62 @@
+.choiceButt {
+    display:inline-block;
+    width: 30%;
+    height: 50px;
+    padding: 0px;
+    border: 0px;
+    margin:0px;
+    font-size: 25px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+  }
+  
+#Noun {
+    background-color: #eb9aa7;
+    color: #363636;
+    font-size: 15px;
+    border-radius: 25px 0px 0px 25px;
+  }
+#Noun:hover {
+    background-color: #e04f67;
+  }
+#Verb {
+    background-color: #454546;
+    color: #363636;
+    font-size: 15px;
+    border-radius: 0px;
+  }
+#Verb:hover {
+    background-color: #484849;
+  }
+#Person {
+    background-color: #454546;
+    color: #363636;
+    font-size: 15px;
+    border-radius: 0px 25px 25px 0px;
+  }
+#Person:hover {
+    background-color: #484849;
+  }
+  
+  
+  
+.fade-out {
+    display: none;
+    animation: fadeOut 1s forwards;
+  }
+  
+@keyframes fadeOut {
+    0% {opacity:1;}
+    100% {opacity:0;}
+  }
+  
+.fade-in {
+    display:block;
+    animation: fadeIn 1s forwards;
+  }
+  
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
