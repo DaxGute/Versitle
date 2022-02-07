@@ -4,6 +4,11 @@ canvas.height = window.innerHeight
 var ctx = canvas.getContext('2d')
 
 const socket = io()
+import inputBox from './inputBoxes.js' 
+
+inputBox.setWindow(document)
+inputBox.createBoxes()
+
 
 canvasAnimationFrames()
 // updateBox()
