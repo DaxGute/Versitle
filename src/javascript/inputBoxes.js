@@ -8,16 +8,14 @@ class inputBox {
         this.inputGroup = inputGroup
         this.inputPosition = inputPosition
         this.inputBox = document.createElement('input')
+        this.color = "white"
         wordleBox.appendChild(this.inputBox)
         this.inputBox.style.backgroundColor = "white"
         this.inputBox.classList.add('letterInput')
 
-        if (inputGroup > 0){
-            this.inputBox.disabled = true
-            this.inputBox.style.backgroundColor = "grey"
-        }
+        this.inputBox.style.height = "" + this.inputBox.clientWidth + "px"
         this.inputBox.style.left = "" + (100/6*(inputPosition+1)) - 7.5 + "%"
-        this.inputBox.style.top = "" + (100/6*(inputGroup)) + "%"
+        this.inputBox.style.top = "" + ((this.inputBox.clientWidth+20)*(inputGroup)) + "px"
         this.inputBox.maxLength = 1
         this.inputBox.addEventListener('keydown', (e) => {
             if (e.keyCode == 8 || e.keycode == 46) {
@@ -43,20 +41,11 @@ class inputBox {
                 }
             }
         })
-        
-        allBoxes.push(this)
     }
 
     static setWindow(documentVar){
         document = documentVar
         wordleBox = documentVar.getElementById("wordleBoxes")
-    }
-    static createBoxes(){
-        for (let group = 0; group < 6; group++) {
-            for (let collumn = 0; collumn < 5; collumn++){
-                new inputBox(group, collumn)
-            }
-        }
     }
 
 
@@ -79,6 +68,26 @@ class inputBox {
                 currentBox = (box.inputGroup*5) + box.inputPosition
                 return box
             }
+        }
+    }
+    static addRow() {
+        // automatically updates the row 
+        for (let boxI = 0; boxI < allBoxes.length; boxI++) {
+            const box = array[boxI];
+            box.inputGroup = box.inputGroup + 1
+            box.inputBox.disabled = true
+        }
+
+        // creates new boxes
+        var newRow = []
+        for (let collumn = 0; collumn < 5; collumn++){
+            newRow.push(new inputBox(0, collumn))
+        }
+        
+        // adds them to all boxes
+        for (let boxI = allBoxes.length - 1; boxI > -1; boxI--) {
+            const box = array[boxI];
+            allBoxes.prepend(box)
         }
     }
 }
