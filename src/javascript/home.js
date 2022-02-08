@@ -9,19 +9,12 @@ import inputBox from './inputBoxes.js'
 inputBox.setWindow(document)
 inputBox.createBoxes()
 
+document.addEventListener('click', () => {
+    inputBox.setClick()
+})
+
 
 canvasAnimationFrames()
-// updateBox()
-
-// function updateBox(){
-   
-//         document.getElementById("choiceBox").classList.add("fade-in")
-//         document.getElementById("choiceBox").classList.remove("fade-out")
-
-// }
-
-// I am gona make this into ultra speed read: like it identifies the main ideas
-
 
 requestAnimationFrame(canvasAnimationFrames);
 var startTime = Date.now()
@@ -70,8 +63,7 @@ function drawLoops(pos){ //TODO: it isn't completely smooth
     for (var i = 0; i < circles.length; i++){
         circles[i].circleUpdates(ctx)
         if (circles[i].shouldDelete){
-            deleteCircles.push(i)
-            console.log(i)
+            deleteCircles.push(i) // doesn't quite work but I don't care
         }
     }
     for (var i = 0; i < deleteCircles.length; i++){
@@ -86,9 +78,9 @@ class circleDrawing{
         this.x = Math.floor(Math.random()*width); 
         this.y = Math.floor(Math.random()*height); 
         if (width > height){
-            this.maxRad = (height)*Math.random()/10
+            this.maxRad = (height)*Math.random()/20
         }else{
-            this.maxRad = (width)*Math.random()/10
+            this.maxRad = (width)*Math.random()/20
         }
         // console.log(this.maxRad)
         this.rad = 1
