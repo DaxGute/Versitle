@@ -14,6 +14,45 @@
   background-color: rgba(109, 109, 109, 0.933)
 
 }
+
+.smallPrompt{
+  position: absolute; 
+  width: 50%; 
+  height: 20%; 
+  background-color: #e3fff6; 
+  border-left: 5px dotted #144553; 
+  border-right:  5px dotted #144553; 
+  left: 25%; 
+  top:40%; 
+  opacity: 0.7; 
+  border-radius: 50px; 
+}
+
+.gamePrompt{
+  position: absolute; 
+  width: 50%; 
+  height: 100%; 
+  background-color: #e3fff6; 
+  border-left: 5px dotted #144553; 
+  border-right:  5px dotted #144553; 
+  left: 25%;
+}
+
+.confirmButton{
+  position: absolute; 
+  top: 100%;
+  left: 70%;
+  background-color: #e3fff6;
+  color: rgb(163, 240, 111);
+  width: 20%;
+  height: 20%;
+  font-size: 3vh;
+  border-radius: 0px 0px 10px 10px;
+}
+.confirmButton:hover{
+  background-color: #f0e1ba;
+  color: rgb(240, 221, 111);
+}
   
 @keyframes fadeOut {
     0% {opacity:1;}

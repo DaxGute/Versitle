@@ -67,6 +67,13 @@ class inputStrip {
             this.line[i].disabled = true;
         }
     }
+    getStripInfo(){
+        code = ""
+        for (let i = 0; i < this.line.length; i ++) {
+            code += this.line[i].value
+        }
+        return code
+    }
 }
 
 export default inputStrip
