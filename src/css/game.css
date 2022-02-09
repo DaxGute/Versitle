@@ -1,0 +1,26 @@
+.letterInput{
+  width: 15%;
+  border: 5px solid green;
+  box-shadow: 0 1px 0 rgb(49, 94, 69);
+  border-radius: 20px;
+  background-color: white;
+  position: absolute;
+  text-transform: lowercase;
+  font-size: 10vh;
+  text-align: center;
+
+}
+.letterInput:disabled{
+  background-color: rgba(109, 109, 109, 0.933)
+
+}
+  
+@keyframes fadeOut {
+    0% {opacity:1;}
+    100% {opacity:0;}
+  }
+  
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }

@@ -22,3 +22,7 @@ app.set("view engine", "ejs")
 app.get('/', (req, res) => {
   res.render(path.resolve(__dirname + '/src/pages/home'))
 });
+
+app.get('/code', (req, res) => {
+  res.render(path.resolve(__dirname + '/src/pages/game'))
+});

@@ -1,35 +1,47 @@
-.letterInput{
-  width: 15%;
-  border: 5px solid green;
-  box-shadow: 0 1px 0 rgb(49, 94, 69);
-  border-radius: 20px;
-  background-color: white;
-  position: absolute;
-  text-transform: lowercase;
-  font-size: 10vh;
-  text-align: center;
+.choiceButt {
+    display:inline-block;
+    width: 30%;
+    height: 50px;
+    padding: 0px;
+    border: 0px;
+    margin:0px;
+    font-size: 25px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    color: #363636;
+    font-size: 15px;
+    position: absolute;
+    transform: translate(-50%, -50%);
 
+  }
+  
+#newGame {
+    background-color: #baeb9a;
+    top: 40%;
+    left: 50%;
 }
-.letterInput:disabled{
-  background-color: rgba(109, 109, 109, 0.933)
-
+#newGame:hover {
+    background-color: #97d86b;
 }
-.fade-out {
-    display: none;
-    animation: fadeOut 1s forwards;
-  }
+#joinGame {
+    top: 60%;
+    left: 50%;
+    background-color: #97d86b;
+}
+#joinGame:hover {
+    background-color: #7ec250;
+}
+@keyframes turnToGame{
+    from {
+        top:25%; 
+        border-radius: 20px;
+        height: 50%;
+    }
+    to {
+        top:40%; 
+        border-radius: 50px;
+        height: 20%;
+    }
+}
   
-@keyframes fadeOut {
-    0% {opacity:1;}
-    100% {opacity:0;}
-  }
-  
-.fade-in {
-    display:block;
-    animation: fadeIn 1s forwards;
-  }
-  
-@keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }

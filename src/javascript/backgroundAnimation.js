@@ -3,16 +3,6 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 var ctx = canvas.getContext('2d')
 
-const socket = io()
-import inputBox from './inputBoxes.js' 
-
-inputBox.setWindow(document)
-inputBox.createBoxes()
-
-document.addEventListener('click', () => {
-    inputBox.setClick()
-})
-
 
 canvasAnimationFrames()
 
@@ -25,7 +15,7 @@ function canvasAnimationFrames() {
     var endTime = Date.now()
     var difference = endTime - startTime
     if (difference > (1/30)) {
-        ctx.fillStyle = "#FFE3F8" // pink
+        ctx.fillStyle = "#284141" // pink
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.fillRect(0, 0, canvas.width, canvas.height)
         if (mousehasmoved){
@@ -55,8 +45,8 @@ var circles = []
 function drawLoops(pos){ //TODO: it isn't completely smooth
     var width = window.innerWidth
     var height = window.innerHeight
-    ctx.fillStyle = "#FC7C68" // more red
-    ctx.strokeStyle = "#FC7C68"
+    ctx.fillStyle = "#2E362B" // more red
+    ctx.strokeStyle = "#2E362B"
     circles.push(new circleDrawing(width, height))
     ctx.lineWidth = 5
     var deleteCircles = []
