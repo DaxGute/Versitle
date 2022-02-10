@@ -5,22 +5,12 @@ class inputStrip {
         this.line = []
         this.boundingBox = document.getElementById(boundingBox)
         this.currentBox = 0
+
+        // a submit button should also be added
         
         for (let box = 0; box < 5; box++) {
             this.newInputBox(box, verticalOffset)
         }
-        // this.input.addEventListener('click', (e) => {
-        //     if (this.input.value.length == 1) {
-        //         var backColor = this.input.style.backgroundColor
-        //         if (backColor == "white"){
-        //             this.input.style.backgroundColor = "orange"
-        //         }else if (backColor == "orange"){
-        //             this.input.style.backgroundColor = "green"
-        //         }else{
-        //             this.input.style.backgroundColor = "white"
-        //         }
-        //     }
-        // })
     }
     newInputBox(collumn, verticalOffset) {
         var input = document.createElement('input')
@@ -68,7 +58,7 @@ class inputStrip {
         }
     }
     getStripInfo(){
-        code = ""
+        var code = ""
         for (let i = 0; i < this.line.length; i ++) {
             code += this.line[i].value
         }

@@ -39,9 +39,9 @@
         height: 50%;
     }
     to {
-        top:40%; 
+        top:35%; 
         border-radius: 50px;
-        height: 20%;
+        height: 30%;
     }
 }
 @keyframes fadeOut {

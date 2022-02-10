@@ -1,6 +1,10 @@
+const prompt = document.getElementById('prompt')
+
 function joinGame(){
-    document.location.href = "./code"
-    console.log("join game")
+    prompt.style.animation = "turnToGame 1s ease-in-out forwards"
+    prompt.addEventListener('animationend', () => {
+        document.location.href = "./code"
+    })
 }
 
 export default joinGame

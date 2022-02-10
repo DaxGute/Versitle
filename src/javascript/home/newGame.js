@@ -6,7 +6,6 @@ function newGame(){
         const randInt = Math.floor(Math.random() * 100000)
         document.location.href = "./code#"+randInt
     })
-    console.log("create game")
 }
 
 export default newGame

@@ -1,5 +1,5 @@
 .letterInput{
-  width: 15%;
+  width: 10%;
   border: 5px solid green;
   box-shadow: 0 1px 0 rgb(49, 94, 69);
   border-radius: 20px;
@@ -18,12 +18,12 @@
 .smallPrompt{
   position: absolute; 
   width: 50%; 
-  height: 20%; 
+  height: 30%; 
   background-color: #e3fff6; 
   border-left: 5px dotted #144553; 
   border-right:  5px dotted #144553; 
   left: 25%; 
-  top:40%; 
+  top: 35%; 
   opacity: 0.7; 
   border-radius: 50px; 
 }
