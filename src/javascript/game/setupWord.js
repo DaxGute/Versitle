@@ -11,9 +11,18 @@ async function setupWord(){
 
     var word = await waitForWord(wordStrip)
 
-    wordPrompt.style.animation = "fadeOut ease-in-out 1s forwards"
-    wordPrompt.addEventListener("animationend", () => {
-        wordPrompt.style.display = "none"   
+    wordPrompt.style.animation = "turnToGame ease-in-out 1s forwards"
+    wordPrompt.addEventListener("animationend", function wordFunc(){
+        const gamePrompt = document.getElementById("gamePrompt")
+        gamePrompt.style.display = "block"
+        gamePrompt.style.animation = "fadeIn ease-in-out 1s forwards"
+
+        //chains them one after aother
+        gamePrompt.addEventListener('animationend', function gameFunc(){ //this technically triggers mutliple times because of other animations inside of it
+            wordPrompt.style.display = "none"
+            this.removeEventListener('animationend', gameFunc);
+        })
+        this.removeEventListener('animationend', wordFunc);
     })
 
     return word

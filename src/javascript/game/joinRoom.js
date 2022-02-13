@@ -12,8 +12,9 @@ async function joinRoom(){
     var code = await waitForJoin(joinStrip)
 
     joinPrompt.style.animation = "fadeOut ease-in-out 1s forwards"
-    joinPrompt.addEventListener("animationend", () => {
+    joinPrompt.addEventListener("animationend", function joinFunc(){
         joinPrompt.style.display = "none"
+        this.removeEventListener('animationend', joinFunc);
     })
     location.hash = code
 }

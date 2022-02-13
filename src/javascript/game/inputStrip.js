@@ -18,7 +18,9 @@ class inputStrip {
         input.style.backgroundColor = "white"
         input.classList.add('letterInput')
 
-        input.style.height = "" + input.clientWidth + "px"
+        // var newHeight = parseInt(input.style.width.substr(0,2))*this.boundingBox.style.width/100
+        // console.log(newHeight)
+        // input.style.height = "" + newHeight + "px"
         input.style.left = "" + (100/6*(collumn+1)) - 7.5 + "%"
         input.style.top = "" + verticalOffset + "px"
         input.maxLength = 1
@@ -63,6 +65,12 @@ class inputStrip {
             code += this.line[i].value
         }
         return code
+    }
+    setStripInfo(value) {
+        for (let i = 0; i < this.line.length; i++) {
+            var inputBox = this.line[i]
+            inputBox.value = value.substr(i,1)
+        }
     }
 }
 

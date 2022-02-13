@@ -55,11 +55,35 @@
 }
   
 @keyframes fadeOut {
-    0% {opacity:1;}
-    100% {opacity:0;}
-  }
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
   
 @keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@keyframes turnToGame{
+  from {
+    top:35%; 
+    border-radius: 50px;
+    height: 30%;
+    opacity: 1;
   }
+  to {
+    top:0%; 
+    border-radius: 0px;
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes lowerWord{
+  from {
+    top:35%;
+  } 
+  to {
+    top:80%;
+  }
+}

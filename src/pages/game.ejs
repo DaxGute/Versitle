@@ -8,7 +8,7 @@
         <canvas style = "width: 100%; height: 100%; position: fixed;" id = "backgroundCanvas"></canvas>
         <div style="display: none; opacity: 0;"  class="smallPrompt" id="wordPrompt">
             <h2 style="text-align: center;"> Select Your Word </h2>
-            <div id="newWordStrip" style="width:100%; height: 100%; position: absolute;">
+            <div id="newWordStrip" style="width:100%; height: 100%; position: absolute; top: 35%">
             </div>
             <button class="confirmButton" id="confirmWord"> Confirm? </button>
         </div>
@@ -18,12 +18,14 @@
             </div>
             <button class="confirmButton" id="confirmJoin"> Confirm? </button>
         </div>
-        <div style = "display: none; opacity: 0" class="gamePrompt">
+        <div style = "display: none; opacity: 0" class="gamePrompt" id="gamePrompt">
             <h2 style="text-align: center; padding-top: 10px;"> Wordle Multiplayer </h2>
-            <div id="wordleBoxes" style = "position: absolute;  height: 45%; width: 100%; overflow-y: auto;">
-
+            <div id="wordleBoxes" style = "position: absolute;  height: 45%; width: 100%; top: 5%; overflow-y: auto;">
             </div>
             Hint: try starting out with 'crane'
+            <p style="color:white; text-align: center; position: absolute; top: 50%; left: 25%; size:36">10</p>
+            <canvas id="wordTimer" style="position: absolute; top: 50%; left: 25%; width: 50%; height:25%" width="1000" height="1000"></canvas>
+            <div id="yourWord" style="position: absolute; height: 20%; width: 100%; top: 35%"></div>
         </div>
 
     </body>
