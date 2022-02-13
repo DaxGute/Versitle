@@ -1,4 +1,3 @@
-
 const timer = document.getElementById('wordTimer')
 const ctx = timer.getContext('2d')
 var secLeft = 10000
@@ -24,6 +23,13 @@ function canvasAnimationFrames() {
     ctx.strokeStyle = '#2E362B';
     ctx.lineWidth = radius
     ctx.stroke();
+
+    
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = "80px Arial";
+    var text = "" + (Math.round(secLeft/1000))
+    ctx.fillText(text, timer.width/2, timer.height/2);
+
     if (secLeft <= 0) {
         clearInterval(interval)
     }
@@ -31,12 +37,12 @@ function canvasAnimationFrames() {
 
 function startTimer(){
     secLeft = 10000
-    interval = setInterval(decreaseTimer, 100)
+    interval = setInterval(decreaseTimer, 10)
 }
 
 function decreaseTimer(){
     console.log("hello")
-    secLeft -= 100
+    secLeft -= 10
     canvasAnimationFrames()
 }
 

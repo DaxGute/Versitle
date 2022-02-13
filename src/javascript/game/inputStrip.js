@@ -69,7 +69,9 @@ class inputStrip {
     setStripInfo(value) {
         for (let i = 0; i < this.line.length; i++) {
             var inputBox = this.line[i]
-            inputBox.value = value.substr(i,1)
+            if (value.substr(i,1) != " "){
+                inputBox.value = value.substr(i,1)
+            }
         }
     }
 }

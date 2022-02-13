@@ -20,12 +20,15 @@
         </div>
         <div style = "display: none; opacity: 0" class="gamePrompt" id="gamePrompt">
             <h2 style="text-align: center; padding-top: 10px;"> Wordle Multiplayer </h2>
-            <div id="wordleBoxes" style = "position: absolute;  height: 45%; width: 100%; top: 5%; overflow-y: auto;">
+            <div id="wordleBoxes" style = "height: 20%; width: 100%; top: 5%;">
             </div>
-            Hint: try starting out with 'crane'
-            <p style="color:white; text-align: center; position: absolute; top: 50%; left: 25%; size:36">10</p>
-            <canvas id="wordTimer" style="position: absolute; top: 50%; left: 25%; width: 50%; height:25%" width="1000" height="1000"></canvas>
-            <div id="yourWord" style="position: absolute; height: 20%; width: 100%; top: 35%"></div>
+            <p style="text-align: center;"> <mark style="background-color: orange"> Orange Letters: </mark> </p>
+            <div style="position: absolute; top: 50%; left: 60%; border-radius: 5px; background-color: #e3fff6; width: 20%; border: 1px solid slategrey; text-align: center;">
+                <p id="youScore"> YOU: 0 </p>
+                <p id="oppScore"> OPP: 0 </p>
+            </div>
+            <canvas id="wordTimer" style="position: absolute; top: 45%; left: 20%; width: 30%" width="1000" height="1000"></canvas>
+            <div id="yourWord" style="position: absolute; height: 20%; width: 100%; top: 35%; left: 0%"></div>
         </div>
 
     </body>

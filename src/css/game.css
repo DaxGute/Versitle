@@ -82,8 +82,12 @@
 @keyframes lowerWord{
   from {
     top:35%;
+    width:100%;
+    left:0%;
   } 
   to {
     top:80%;
+    width:70%;
+    left:15%;
   }
 }
