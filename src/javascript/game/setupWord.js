@@ -14,8 +14,11 @@ async function setupWord(){
     wordPrompt.style.animation = "turnToGame ease-in-out 1s forwards"
     wordPrompt.addEventListener("animationend", function wordFunc(){
         const gamePrompt = document.getElementById("gamePrompt")
+        const readyPrompt = document.getElementById("readyPrompt")
         gamePrompt.style.display = "block"
         gamePrompt.style.animation = "fadeIn ease-in-out 1s forwards"
+        readyPrompt.style.display = "block"
+        readyPrompt.style.animation = "fadeIn ease-in-out 1s forwards"
 
         //chains them one after aother
         gamePrompt.addEventListener('animationend', function gameFunc(){ //this technically triggers mutliple times because of other animations inside of it

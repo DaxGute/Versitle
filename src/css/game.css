@@ -54,6 +54,21 @@
   color: rgb(240, 221, 111);
 }
   
+.readyButton{
+  position: absolute; 
+  width: 50%; 
+  height:30%; 
+  top: 35%; 
+  left: 25%; 
+  background-color: #a6d67f; 
+  border: none; 
+  border-radius: 50px;
+}
+.readyButton:hover{
+  background-color: #99d666; 
+  cursor: pointer;
+}
+
 @keyframes fadeOut {
   0% {opacity:1;}
   100% {opacity:0;}

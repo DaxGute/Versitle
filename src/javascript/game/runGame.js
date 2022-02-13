@@ -21,7 +21,6 @@ function setupGame(word){
 }
 function runGame(){
     startTimer()
-
 }
 
 
