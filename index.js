@@ -86,7 +86,12 @@ io.on('connection', socket => {
 })
 
 function runGame(socket){
+  var timerInterval = setInterval(() => {
+    socket.emit('getWord')
+  }, 10000)
+
   socket.on('wordGuess', (word) => {
+    socket.numMatch = -1
     //make sure that it is 6 characters long
     var newString = ""
     var partWordList = []
@@ -107,10 +112,27 @@ function runGame(socket){
         newString += "_"
       }
     }
+    socket.numMatch = numMatch
 
     socket.emit("hitMap", newString)
-    socket.
-    if 
+    socket.to(socket.room).emit("oppHitMap", newString)
+    if (socket.partner.numMatch != -1){
+      socket.win += 1
+      if (socket.numMatch > socket.partner.numMatch) {
+        socket.emit("win", socket.win, socket.partner.win)
+        socket.to(socket.room).emit("lose", socket.partner.win, socket.win)
+      }else if (socket.numMatch < socket.partner.numMatch) {
+        socket.partner.win += 1
+        socket.emit("lose", socket.win, socket.partner.win)
+        socket.to(socket.room).emit("win", socket.partner.win, socket.win)
+      }else {
+        socket.win += 0.5
+        socket.partner.win += 0.5
+        socket.emit("draw", socket.win, socket.partner.win)
+        socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
+      }
+      clearInterval(timerInterval)
+    }
     
   })
 }
