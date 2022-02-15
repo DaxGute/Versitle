@@ -30,12 +30,14 @@ const allSocketsWords = {}
 const io = require("socket.io")(server)
 io.on('connection', socket => {
   socket.word = ""
+  socket.ready = false
+  socket.room = ""
   socket.on('joinRoom', (room) => {
     room = room.substring(1, room.length)
+    socket.room = room
     allSocketsReady[room] = []
     allSocketsWords[room] = []
 
-    console.log(io.sockets.adapter.rooms.get(room))
 
     var playerCountsCorrect = () => {
       socket.join(room)
@@ -57,15 +59,24 @@ io.on('connection', socket => {
 
     socket.on('ready', () => {
       allSocketsReady[room].push(true)
-      if (allSocketsReady[room]){
+      socket.ready = true
+      console.log("room: " + room)
+      console.log(allSocketsReady[room])
+      if (allSocketsReady[room][0] && allSocketsReady[room][1]){
         io.to(room).emit('startGame')
       }
     })
     socket.on('word', (newWord) => {
-      console.log(newWord)
       socket.word = newWord
-      allSocketsWords[room].push(newWord)
+      allSocketsWords[socket.room].push(newWord)
     })
+  })
+
+  socket.on('disconnect', () => {
+    console.log("disconnect")
+    if (socket.ready) {
+      allSocketsReady[socket.room].pop()
+    }
   })
 })
 

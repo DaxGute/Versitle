@@ -1,5 +1,4 @@
-import inputStrip from './inputStrip.js' 
-import startTimer from './clock.js'
+import inputStrip from "../inputStrip.js"
 
 const yourWord = document.getElementById("yourWord")
 var yourWordStrip;
@@ -12,17 +11,11 @@ function setupGame(word){
     yourWordStrip.disableInput()
     yourWord.style.animation = "lowerWord ease-in-out 1s forwards 1s" //I j have ti on delay here because I am lazy
     yourWord.addEventListener("animationend", function wordFunc(){
-        runGame()
         document.getElementById("wordTimer").style.animation = "fadeIn ease-in-out 0.1s forwards"
         this.removeEventListener('animationend', wordFunc);
     })
     wordleStrip = new inputStrip("wordleBoxes", 100)
-    wordleStrip.style.animation = "fadeIn ease-in-out 0.1s forwards"
+    // wordleStrip.style.animation = "fadeIn ease-in-out 0.1s forwards"
 }
-function runGame(){
-    startTimer()
-}
-
-
 
 export default setupGame

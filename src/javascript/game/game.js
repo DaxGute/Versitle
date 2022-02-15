@@ -1,13 +1,10 @@
 import joinRoom from './joinRoom.js'
 import inputStrip from './inputStrip.js'
 import setupWord from './setupWord.js'
-import setupGame from './runGame.js'
-import readyUp from './readyButton.js'
+import runGame from './gameRunning/runGame.js'
+import readyUp from './gameRunning/readyButton.js'
 
 const socket = io();
-
-var playerCountPass = false
-
 
 inputStrip.setWindow(document)
 
@@ -26,10 +23,9 @@ function setupUser(){
       if (playerCountPass) {
          setupWord().then((word) => {
             socket.emit('word', word)
-            //checks that there are not too many players
-
-            readyUp().then(()=>{
-               setupGame(word)
+      
+            readyUp(socket, word).then(()=>{
+               runGame()
             })
          })
       } else{

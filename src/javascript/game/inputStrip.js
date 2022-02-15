@@ -74,6 +74,9 @@ class inputStrip {
             }
         }
     }
+    setFocusAtStart(){
+        this.line[0].focus()
+    }
 }
 
 export default inputStrip
