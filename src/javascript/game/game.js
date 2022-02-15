@@ -21,7 +21,7 @@ if (location.hash == ""){ // check for if the hash code is valid
 function setupUser(){
    socket.on('playerCount', (playerCountPass) => {
       if (playerCountPass) {
-         setupWord()
+         startMatch()
       } else{
          console.log("ERROR: TOO MANY PLAYERS")
       }
@@ -30,14 +30,16 @@ function setupUser(){
    socket.emit('joinRoom', location.hash)
 }
 
-function setupWord() {
-   setupWord().then((word) => {
+async function startMatch() {
+   var notEndGame = true
+   while (notEndGame) {
+      var word = await setupWord()
       socket.emit('word', word)
-
-      readyUp(socket, word).then((importantStrips)=>{
-         runGame(importantStrips, socket)
-      })
-   })
+      var importantStrips = await readyUp(socket, word)
+      await runGame(importantStrips, socket, word)
+   }
 }
+
+
 
 
