@@ -81,5 +81,7 @@ io.on('connection', socket => {
 })
 
 function runGame(socket){
-
+  socket.on('wordGuess', (word) => {
+    
+  })
 }

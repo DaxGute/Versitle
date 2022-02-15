@@ -29,21 +29,21 @@ function canvasAnimationFrames() {
     ctx.font = "80px Arial";
     var text = "" + (Math.round(secLeft/1000))
     ctx.fillText(text, timer.width/2, timer.height/2);
-
-    if (secLeft <= 0) {
-        clearInterval(interval)
-    }
 }   
 
 function startTimer(){
-    secLeft = 10000
-    interval = setInterval(decreaseTimer, 10)
-}
-
-function decreaseTimer(){
-    console.log("hello")
-    secLeft -= 10
-    canvasAnimationFrames()
+    return new Promise((resolve) => {
+        secLeft = 10000
+        var decreaseTimer = function decreaseTimer(){
+            secLeft -= 10
+            canvasAnimationFrames()
+            if (secLeft <= 0) {
+                resolve()
+                clearInterval(interval)
+            }
+        }
+        interval = setInterval(decreaseTimer, 10)
+    })
 }
 
 

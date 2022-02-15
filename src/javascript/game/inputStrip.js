@@ -74,8 +74,8 @@ class inputStrip {
             }
         }
     }
-    setFocusAtStart(){
-        this.line[0].focus()
+    getInputBox(index){
+        return this.line[index]
     }
 }
 

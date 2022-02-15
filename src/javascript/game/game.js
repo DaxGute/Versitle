@@ -24,8 +24,8 @@ function setupUser(){
          setupWord().then((word) => {
             socket.emit('word', word)
       
-            readyUp(socket, word).then(()=>{
-               runGame()
+            readyUp(socket, word).then((importantStrips)=>{
+               runGame(importantStrips, socket)
             })
          })
       } else{

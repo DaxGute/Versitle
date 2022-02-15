@@ -15,6 +15,8 @@ function setupGame(word){
         this.removeEventListener('animationend', wordFunc);
     })
     wordleStrip = new inputStrip("wordleBoxes", 100)
+
+    return [yourWordStrip, wordleStrip]
     // wordleStrip.style.animation = "fadeIn ease-in-out 0.1s forwards"
 }
 
