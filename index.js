@@ -24,64 +24,93 @@ app.get('/code', (req, res) => {
   res.render(path.resolve(__dirname + '/src/pages/game'))
 });
 
-const allSocketsReady = {}
-const allSocketsWords = {}
+/**
+ * THIS NEXT PART IS VERY INEFFICIENT
+**/
 
 const io = require("socket.io")(server)
 io.on('connection', socket => {
   socket.word = ""
   socket.ready = false
   socket.room = ""
+  socket.partner = undefined
+  socket.won = 0
+
   socket.on('joinRoom', (room) => {
     room = room.substring(1, room.length)
     socket.room = room
-    allSocketsReady[room] = []
-    allSocketsWords[room] = []
-
 
     var playerCountsCorrect = () => {
       socket.join(room)
       socket.emit('playerCount', true)
       runGame(socket)
     }
+
     //sorta lazy coding to decide whether or not a player should be let in
     try{
       if (io.sockets.adapter.rooms.get(room).size < 2){
+        var partnerSocket
+        for (const clientId of io.sockets.adapter.rooms.get(room)) {
+          var partnerSocket = io.sockets.sockets.get(clientId);
+        }
+        socket.partner = partnerSocket
+        socket.partner.partner = socket
         playerCountsCorrect()
       } else {
         //too many players
         socket.emit('playerCount', false)
       }
-    }catch{
+    }catch (err){
       playerCountsCorrect()
     }
 
 
     socket.on('ready', () => {
-      allSocketsReady[room].push(true)
       socket.ready = true
-      console.log("room: " + room)
-      console.log(allSocketsReady[room])
-      if (allSocketsReady[room][0] && allSocketsReady[room][1]){
-        io.to(room).emit('startGame')
+      if (socket.partner != undefined){
+        if (socket.ready && socket.partner.ready){
+          io.to(room).emit('startGame')
+        }
       }
     })
     socket.on('word', (newWord) => {
       socket.word = newWord
-      allSocketsWords[socket.room].push(newWord)
     })
   })
 
   socket.on('disconnect', () => {
-    console.log("disconnect")
-    if (socket.ready) {
-      allSocketsReady[socket.room].pop()
+    if (socket.partner != undefined){
+      socket.partner.partner = undefined
     }
   })
 })
 
 function runGame(socket){
   socket.on('wordGuess', (word) => {
+    //make sure that it is 6 characters long
+    var newString = ""
+    var partWordList = []
+    var guessWordList = []
+    for (var i = 0; i < 6; i++){
+      partWordList.push(socket.partner.word.substring(i, 1))
+      guessWordList.push(word.substring(i, 1))
+    }
+
+    var numMatch = 0 
+    for (var i = 0; i < 6; i++){
+      if (partWordList[i] == guessWordList[i]) {
+        numMatch++ 
+        newString += guessWordList[i].toUpperCase()
+      }else if (guessWordList[i] in partWordList) {
+        newString += guessWordList[i]
+      }else{
+        newString += "_"
+      }
+    }
+
+    socket.emit("hitMap", newString)
+    socket.
+    if 
     
   })
 }
