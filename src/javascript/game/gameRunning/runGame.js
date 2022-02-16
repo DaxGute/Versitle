@@ -21,6 +21,7 @@ async function runGame(oppStrip, socket, theWord) {
 
         socket.on("hitMap", (yourHitMap) => {
             updateYourHitmap(yourHitMap)
+            typingWordle.disableInput()
             typingWordle = new inputStrip("wordleBoxes", 10)
             typingWordle.fadeInAnim()
             typingWordle.getInputBox(0).focus() 
@@ -87,7 +88,6 @@ function loss(){
     })
 }
 
-var yourOrange = []
 function updateYourHitmap(hitMap){
     console.log(hitMap)
     for(var i=0; i<5; i ++){
@@ -97,20 +97,9 @@ function updateYourHitmap(hitMap){
             if (hitMapLetter == hitMapLetter.toUpperCase()) {
                 box.style.backgroundColor = "green"
             }else {
-                var letterNotFound = true
-                
-                for (let j = 0; j < yourOrange.length; j++) {
-                    if(yourOrange[j] == hitMapLetter){
-                        letterNotFound = false
-                    }
-                }
-                if (letterNotFound) {
-                    yourOrange.push(hitMapLetter)
-                }
-                box.style.backgroundColor = "white"
+                box.style.backgroundColor = "orange"
             }
         }else{
-            box.innerHTML = ""
             box.style.backgroundColor = "white"
         }
 
@@ -125,7 +114,7 @@ function updateTheirHitmap(partnerHitMap){
             if (hitMapLetter == hitMapLetter.toUpperCase()) {
                 box.style.backgroundColor = "green"
             }else{
-                box.style.backgroundColor = "white"
+                box.style.backgroundColor = "orange"
             }
         }else{
             box.style.backgroundColor = "white"

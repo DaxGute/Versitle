@@ -37,8 +37,8 @@ function startTimer(){
             secLeft -= 10
             canvasAnimationFrames(secLeft)
             if (secLeft <= 0) {
-                resolve()
                 clearInterval(interval)
+                resolve()
             }
         }
         interval = setInterval(decreaseTimer, 10)

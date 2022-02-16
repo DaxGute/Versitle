@@ -86,10 +86,11 @@ io.on('connection', socket => {
 })
 
 function runGame(socket){
-  var timerInterval = setInterval(() => {
-    setTimeout(() => {
+  var timerInterval
+  setTimeout(() => {
+    timerInterval = setInterval(() => {
       socket.emit('getWord')
-  }, 10000)
+    }, 10000)
   }, 10000)
 
   socket.on('wordGuess', (word) => {
