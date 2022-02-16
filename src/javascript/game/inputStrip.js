@@ -24,6 +24,7 @@ class inputStrip {
         input.style.left = "" + (100/6*(collumn+1)) - 7.5 + "%"
         input.style.top = "" + verticalOffset + "px"
         input.maxLength = 1
+        const BIRTHNUMBER_ALLOWED_CHARS_REGEXP = /\p{L}/u ;
         input.addEventListener('keydown', (e) => {
             if (e.keyCode == 8 || e.keycode == 46) {
                 if (input.value.length == 0) {
@@ -40,7 +41,11 @@ class inputStrip {
                     this.currentBox = this.currentBox + 1
                 }
             }
-        })
+            
+            if (!BIRTHNUMBER_ALLOWED_CHARS_REGEXP.test(e.key)) {
+                e.preventDefault();
+            }
+        });
         input.addEventListener('click', () => {
             for (let boxI = 0; boxI < this.line.length; boxI++) {
                 const box = this.line[boxI];

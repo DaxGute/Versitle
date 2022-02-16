@@ -90,15 +90,24 @@ function updateYourHitmap(hitMap){
     for(var i=0; i<5; i ++){
         var hitMapLetter = hitMap.substring(i,i+1)
         var box = typingWordle.getInputBox(i)
-        if (hitMapLetter == hitMapLetter.toUpperCase()) {
-            box.style.backgroundColor = "green"
-        }else if (hitMapLetter != "_") {
-            if (!(hitMapLetter in yourOrange)){
-                yourOrange.push(hitMapLetter)
+        if (/^[A-Z]$/i.test(hitMapLetter)){
+            if (hitMapLetter == hitMapLetter.toUpperCase()) {
+                box.style.backgroundColor = "green"
+            }else {
+                var letterNotFound = true
+                
+                for (let j = 0; j < yourOrange.length; j++) {
+                    if(yourOrange[j] == hitMapLetter){
+                        letterNotFound = false
+                    }
+                }
+                if (letterNotFound) {
+                    yourOrange.push(hitMapLetter)
+                }
+                box.style.backgroundColor = "white"
             }
-            box.style.backgroundColor = "white"
         }else{
-            input.innerHTML = ""
+            box.innerHTML = ""
             box.style.backgroundColor = "white"
         }
 
@@ -110,10 +119,14 @@ function updateTheirHitmap(partnerHitMap){
     for(var i=0; i<5; i ++){
         var hitMapLetter = partnerHitMap.substring(i,i+1)
         var box = yourWordle.getInputBox(i)
-        if (hitMapLetter == hitMapLetter.toUpperCase()) {
-            box.style.backgroundColor = "green"
-        }else if (hitMapLetter != "_") {
-            box.style.backgroundColor = "orange"
+        if (/^[A-Z]$/i.test(hitMapLetter)){
+            if (hitMapLetter == hitMapLetter.toUpperCase()) {
+                box.style.backgroundColor = "green"
+            }else{
+                box.style.backgroundColor = "white"
+            }
+        }else{
+            box.style.backgroundColor = "white"
         }
     }
 }

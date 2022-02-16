@@ -93,6 +93,9 @@ function runGame(socket){
   }, 10000)
 
   socket.on('wordGuess', (word) => {
+    for (var i = 0; i < 5 - word.length; i++) {
+      word += " "
+    }
     socket.numMatch = -1
     //make sure that it is 6 characters long
     var newString = ""
