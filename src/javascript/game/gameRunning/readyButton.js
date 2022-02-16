@@ -11,22 +11,22 @@ async function readyUp(socket, word){
         socket.emit("ready")
     })
 
-    var importantStrips = await waitForOtherPlayer(socket, word)
+    var oppStrip = await waitForOtherPlayer(socket, word)
     await startGame()
-    return importantStrips
+    return oppStrip
     
 }
 
 function waitForOtherPlayer(socket, word){
     return new Promise((resolve) => {
         socket.on("startGame", () => {
-            var importantStrips = setupGame(word)
+            var oppStrip = setupGame(word)
             readyPrompt.style.animation = "fadeOut ease-in 5s forwards"
             readyPrompt.addEventListener('animationend', function readyFunc() {
                 readyPrompt.style.display = "none"
                 this.removeEventListener('animationend', readyFunc);
             })
-            resolve(importantStrips)
+            resolve(oppStrip)
         })
     })
 }

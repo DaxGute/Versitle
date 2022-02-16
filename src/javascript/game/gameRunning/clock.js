@@ -1,9 +1,7 @@
 const timer = document.getElementById('wordTimer')
 const ctx = timer.getContext('2d')
-var secLeft = 10000
-var interval;
 
-function canvasAnimationFrames() {
+function canvasAnimationFrames(secLeft) {
     ctx.clearRect(0, 0, timer.width, timer.height);
     var radius;
     if (timer.width > timer.height) {
@@ -33,10 +31,11 @@ function canvasAnimationFrames() {
 
 function startTimer(){
     return new Promise((resolve) => {
-        secLeft = 10000
+        var interval
+        var secLeft = 10000
         var decreaseTimer = function decreaseTimer(){
             secLeft -= 10
-            canvasAnimationFrames()
+            canvasAnimationFrames(secLeft)
             if (secLeft <= 0) {
                 resolve()
                 clearInterval(interval)

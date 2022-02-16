@@ -6,13 +6,13 @@ var yourWordle;
 const wordle = document.getElementById("wordleBoxes")
 var typingWordle;
 var word = ""
-
-async function runGame(importantStrips, socket, theWord) {
+// a new wordle should be added each time so perhaps your wordle should change each time
+async function runGame(oppStrip, socket, theWord) {
     return new Promise((resolve) => {
         word = theWord
-        yourWordle = importantStrips[0]
-        typingWordle = importantStrips[1]
-        console.log(typingWordle)
+        yourWordle = oppStrip
+        typingWordle = new inputStrip("wordleBoxes", 10)
+        typingWordle.fadeInAnim()
         typingWordle.getInputBox(0).focus()
         startTimer()
         socket.on("getWord", () => {
@@ -21,6 +21,10 @@ async function runGame(importantStrips, socket, theWord) {
 
         socket.on("hitMap", (yourHitMap) => {
             updateYourHitmap(yourHitMap)
+            typingWordle = new inputStrip("wordleBoxes", 10)
+            typingWordle.fadeInAnim()
+            typingWordle.getInputBox(0).focus() 
+            startTimer()
         })
         socket.on("oppHitMap", (oppHitMap) => {
             updateTheirHitmap(oppHitMap)
@@ -84,7 +88,6 @@ function loss(){
 }
 
 var yourOrange = []
-const orangeLetters = document.getElementById("orangeLetters")
 function updateYourHitmap(hitMap){
     console.log(hitMap)
     for(var i=0; i<5; i ++){
@@ -112,7 +115,6 @@ function updateYourHitmap(hitMap){
         }
 
     }
-    orangeLetters.innerHTML = "" + yourOrange
 }
 
 function updateTheirHitmap(partnerHitMap){

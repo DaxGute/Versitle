@@ -35,8 +35,8 @@ async function startMatch() {
    while (notEndGame) {
       var word = await setupWord()
       socket.emit('word', word)
-      var importantStrips = await readyUp(socket, word)
-      await runGame(importantStrips, socket, word)
+      var oppStrip = await readyUp(socket, word)
+      await runGame(oppStrip, socket, word)
    }
 }
 

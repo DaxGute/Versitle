@@ -12,13 +12,10 @@ function setupGame(word){
     yourWord.style.animation = "lowerWord ease-in-out 1s forwards 1s" //I j have ti on delay here because I am lazy
     yourWord.addEventListener("animationend", function wordFunc(){
         document.getElementById("wordTimer").style.animation = "fadeIn ease-in-out 0.1s forwards"
-        document.getElementById("orangestuff").style.display = "block"
-        document.getElementById("orangestuff").style.animation = "fadeIn ease-in-out 0.1s forwards"
         this.removeEventListener('animationend', wordFunc);
     })
-    wordleStrip = new inputStrip("wordleBoxes", 100)
 
-    return [yourWordStrip, wordleStrip]
+    return yourWordStrip
     // wordleStrip.style.animation = "fadeIn ease-in-out 0.1s forwards"
 }
 

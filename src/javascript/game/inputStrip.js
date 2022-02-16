@@ -7,14 +7,20 @@ class inputStrip {
         this.currentBox = 0
 
         // a submit button should also be added
-        
+        this.surroundingBox = document.createElement('div')
+        this.surroundingBox.style.width = "100%"
+        this.surroundingBox.style.height = "80%"
+        this.surroundingBox.style.display = "relative"
+        this.surroundingBox.style.top = "0%"
+        this.surroundingBox.style.left = "0%"
+        this.boundingBox.prepend(this.surroundingBox)
         for (let box = 0; box < 5; box++) {
             this.newInputBox(box, verticalOffset)
         }
     }
     newInputBox(collumn, verticalOffset) {
         var input = document.createElement('input')
-        this.boundingBox.appendChild(input)
+        this.surroundingBox.appendChild(input)
         input.style.backgroundColor = "white"
         input.classList.add('letterInput')
 
@@ -22,7 +28,7 @@ class inputStrip {
         // console.log(newHeight)
         // input.style.height = "" + newHeight + "px"
         input.style.left = "" + (100/6*(collumn+1)) - 7.5 + "%"
-        input.style.top = "" + verticalOffset + "px"
+        // input.style.top = "" + verticalOffset + "px"
         input.maxLength = 1
         const BIRTHNUMBER_ALLOWED_CHARS_REGEXP = /\p{L}/u ;
         input.addEventListener('keydown', (e) => {
@@ -82,6 +88,13 @@ class inputStrip {
     getInputBox(index){
         return this.line[index]
     }
+    fadeInAnim(){
+        for (let i = 0; i < this.line.length; i++){
+            var box = this.line[i]
+            box.style.animation = "fadeIn ease-in-out 0.1s forwards" 
+        }   
+    }
+    
 }
 
 export default inputStrip
