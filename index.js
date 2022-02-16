@@ -87,7 +87,9 @@ io.on('connection', socket => {
 
 function runGame(socket){
   var timerInterval = setInterval(() => {
-    socket.emit('getWord')
+    setTimeout(() => {
+      socket.emit('getWord')
+  }, 10000)
   }, 10000)
 
   socket.on('wordGuess', (word) => {
@@ -96,27 +98,35 @@ function runGame(socket){
     var newString = ""
     var partWordList = []
     var guessWordList = []
-    for (var i = 0; i < 6; i++){
-      partWordList.push(socket.partner.word.substring(i, 1))
-      guessWordList.push(word.substring(i, 1))
+    for (var i = 0; i < 5; i++){
+      partWordList.push(socket.partner.word.substring(i, i+1))
+      guessWordList.push(word.substring(i, i+1))
     }
 
     var numMatch = 0 
-    for (var i = 0; i < 6; i++){
+    for (var i = 0; i < 5; i++){
       if (partWordList[i] == guessWordList[i]) {
         numMatch++ 
         newString += guessWordList[i].toUpperCase()
-      }else if (guessWordList[i] in partWordList) {
-        newString += guessWordList[i]
       }else{
-        newString += "_"
+        var guessFrag = guessWordList[i]
+        var guessFragNotFound = true
+        for (var j = 0; j < 5; j++) {
+          if (guessFrag == partWordList[j]) {
+            newString += guessFrag
+            guessFragNotFound = false
+          }
+        }
+        if (guessFragNotFound) {
+          newString += "_"
+        }
       }
     }
     socket.numMatch = numMatch
 
     socket.emit("hitMap", newString)
     socket.to(socket.room).emit("oppHitMap", newString)
-    if (socket.partner.numMatch != -1){
+    if (socket.partner.numMatch != -1 && socket.numMatch == 5){
       socket.win += 1
       if (socket.numMatch > socket.partner.numMatch) {
         socket.emit("win", socket.win, socket.partner.win)

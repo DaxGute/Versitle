@@ -5,8 +5,6 @@ const yourWord = document.getElementById("yourWord")
 var yourWordle;
 const wordle = document.getElementById("wordleBoxes")
 var typingWordle;
-var hitMap = ""
-var partnerHitMap = ""
 var word = ""
 
 async function runGame(importantStrips, socket, theWord) {
@@ -14,21 +12,18 @@ async function runGame(importantStrips, socket, theWord) {
         word = theWord
         yourWordle = importantStrips[0]
         typingWordle = importantStrips[1]
+        console.log(typingWordle)
         typingWordle.getInputBox(0).focus()
         startTimer()
         socket.on("getWord", () => {
-            socket.emit('guessWord', typingWordle.getStripInfo())
-            hitMap = ""
-            partnerHitMap = ""
+            socket.emit('wordGuess', typingWordle.getStripInfo())
         })
 
         socket.on("hitMap", (yourHitMap) => {
-            hitMap = yourHitMap
-            updateYourHitmap()
+            updateYourHitmap(yourHitMap)
         })
         socket.on("oppHitMap", (oppHitMap) => {
-            partnerHitMap = oppHitMap
-            updateTheirHitmap()
+            updateTheirHitmap(oppHitMap)
         })
 
         socket.on("win", (yourScore, theirScore) => {
@@ -90,27 +85,30 @@ function loss(){
 
 var yourOrange = []
 const orangeLetters = document.getElementById("orangeLetters")
-function updateYourHitmap(){
-    for(var i=0; i<6; i ++){
-        var hitMapLetter = hitMap.substring(i,1)
+function updateYourHitmap(hitMap){
+    console.log(hitMap)
+    for(var i=0; i<5; i ++){
+        var hitMapLetter = hitMap.substring(i,i+1)
         var box = typingWordle.getInputBox(i)
         if (hitMapLetter == hitMapLetter.toUpperCase()) {
             box.style.backgroundColor = "green"
         }else if (hitMapLetter != "_") {
-            if (!hitMapLetter in yourOrange){
+            if (!(hitMapLetter in yourOrange)){
                 yourOrange.push(hitMapLetter)
             }
+            box.style.backgroundColor = "white"
         }else{
             input.innerHTML = ""
+            box.style.backgroundColor = "white"
         }
 
     }
     orangeLetters.innerHTML = "" + yourOrange
 }
 
-function updateTheirHitmap(){
-    for(var i=0; i<6; i ++){
-        var hitMapLetter = partnerHitMap.substring(i,1)
+function updateTheirHitmap(partnerHitMap){
+    for(var i=0; i<5; i ++){
+        var hitMapLetter = partnerHitMap.substring(i,i+1)
         var box = yourWordle.getInputBox(i)
         if (hitMapLetter == hitMapLetter.toUpperCase()) {
             box.style.backgroundColor = "green"
