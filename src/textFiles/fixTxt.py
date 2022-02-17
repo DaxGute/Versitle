@@ -1,3 +1,6 @@
+from turtle import update
+
+
 def getLinesOfFile(file):
     f = open(file, "r")
     listOfLines = []
@@ -11,6 +14,7 @@ def getLinesOfFile(file):
 
 def main():
     updatedList = getLinesOfFile("./five-letter-words.txt")
+    updatedList = sorted(updatedList)
     f = open("./five-letter-words.txt", "w")
     for word in updatedList:
         f.write(word+"\n")
