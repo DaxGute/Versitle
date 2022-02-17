@@ -12,7 +12,13 @@ async function runGame(oppStrip, socket, theWord) {
         socket.emit("playerStarted")
         word = theWord
         yourWordle = oppStrip
-        typingWordle = new inputStrip("wordleBoxes", 10)
+
+        document.getElementById("title").style.display = "block"
+        document.getElementById("title").style.animation = "fadeIn ease-in-out 0.1s forwards"
+        document.getElementById("scores").style.display = "block"
+        document.getElementById("scores").style.animation = "fadeIn ease-in-out 0.1s forwards"
+
+        typingWordle = new inputStrip("wordleBoxes", 30)
         typingWordle.fadeInAnim()
         typingWordle.getInputBox(0).focus()
         startTimer()
@@ -24,7 +30,7 @@ async function runGame(oppStrip, socket, theWord) {
         socket.on("hitMap", (yourHitMap) => {
             updateYourHitmap(yourHitMap)
             typingWordle.disableInput()
-            typingWordle = new inputStrip("wordleBoxes", 10)
+            typingWordle = new inputStrip("wordleBoxes", 30)
             typingWordle.fadeInAnim()
             typingWordle.getInputBox(0).focus() 
             startTimer()
@@ -102,7 +108,7 @@ function updateYourHitmap(hitMap){
                 box.style.backgroundColor = "orange"
             }
         }else{
-            box.style.backgroundColor = "white"
+            box.style.backgroundColor = "#2f4d4d"
         }
 
     }
@@ -119,7 +125,7 @@ function updateTheirHitmap(partnerHitMap){
                 box.style.backgroundColor = "orange"
             }
         }else{
-            box.style.backgroundColor = "white"
+            box.style.backgroundColor = "#2f4d4d"
         }
     }
 }

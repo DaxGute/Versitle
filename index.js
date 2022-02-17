@@ -73,7 +73,6 @@ io.on('connection', socket => {
     })
     socket.on('word', (newWord) => {
       if (isWordReal(newWord)) {
-        console.log("real")
         socket.word = newWord
         socket.emit('wordCheck', true)
       }else{

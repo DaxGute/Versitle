@@ -33,6 +33,11 @@
 #joinGame:hover {
     background-color: #2f4d4d;
 }
+
+::selection {
+    background: #365858;
+  }
+  
 @keyframes turnToGame{
     from {
         top:25%; 

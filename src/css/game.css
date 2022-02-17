@@ -33,7 +33,7 @@
   position: absolute; 
   width: 50%; 
   height: 100%; 
-  background-color: #223838;
+  background-color:#223838;
   border-left: 5px dotted rgb(38, 45, 49); 
   border-right:  5px dotted rgb(38, 45, 49); 
   left: 25%;
@@ -60,18 +60,23 @@
   
 .readyButton{
   position: absolute; 
-  width: 50%; 
+  width: 30%; 
   height:30%; 
   top: 35%; 
-  left: 25%; 
-  background-color: #a6d67f; 
+  left: 35%; 
+  background-color: #223838; 
   border: none; 
-  border-radius: 50px;
+  border-radius: 1000px;
   font-family: 'Montserrat', sans-serif;
+  opacity: 1;
 }
 .readyButton:hover{
-  background-color: #99d666; 
+  background-color: #2f4d4d; 
   cursor: pointer;
+}
+
+::selection {
+  background: #365858;
 }
 
 @keyframes fadeOut {
@@ -82,6 +87,22 @@
 @keyframes fadeIn {
   0% {opacity:0;}
   100% {opacity:0.7;}
+}
+
+@keyframes countdown {
+  0% {
+    opacity:0.7;
+    width: 30%;
+    height: 30%;
+    top: 35%;
+    left: 35%
+  }
+  100% {
+    opacity:0;
+    width: 10%;
+    height: 10%;
+    top: 45%;
+    left: 45%}
 }
 
 @keyframes turnToGame{
