@@ -29,9 +29,10 @@ function canvasAnimationFrames(secLeft) {
     ctx.fillText(text, timer.width/2, timer.height/2);
 }   
 
+var interval
 function startTimer(){
     return new Promise((resolve) => {
-        var interval
+        clearInterval(interval)
         var secLeft = 10000
         var decreaseTimer = function decreaseTimer(){
             secLeft -= 10

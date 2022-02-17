@@ -1,57 +1,61 @@
 .letterInput{
   width: 10%;
-  border: 5px solid green;
-  box-shadow: 0 1px 0 rgb(49, 94, 69);
+  border: 5px solid rgb(38, 45, 49);;
+  box-shadow: 0 1px 0 ;
   border-radius: 20px;
-  background-color: white;
+  background-color: #2f4d4d;
   position: absolute;
   text-transform: lowercase;
   font-size: 10vh;
   text-align: center;
-
+  font-family: 'Montserrat', sans-serif;
+  color: #0e1616;
 }
-.letterInput:disabled{
-  background-color: rgba(109, 109, 109, 0.933)
-
+.letterInput:focus {
+  outline: 3px solid  #2f4d4d;
 }
 
 .smallPrompt{
   position: absolute; 
   width: 50%; 
   height: 30%; 
-  background-color: #e3fff6; 
-  border-left: 5px dotted #144553; 
-  border-right:  5px dotted #144553; 
+  background-color: #223838;
+  border-left: 5px dotted rgb(38, 45, 49); 
+  border-right:  5px dotted rgb(38, 45, 49); 
   left: 25%; 
   top: 35%; 
   opacity: 0.7; 
   border-radius: 50px; 
+  font-family: 'Montserrat', sans-serif;
 }
 
 .gamePrompt{
   position: absolute; 
   width: 50%; 
   height: 100%; 
-  background-color: #e3fff6; 
-  border-left: 5px dotted #144553; 
-  border-right:  5px dotted #144553; 
+  background-color: #223838;
+  border-left: 5px dotted rgb(38, 45, 49); 
+  border-right:  5px dotted rgb(38, 45, 49); 
   left: 25%;
+  opacity: 0.7;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .confirmButton{
   position: absolute; 
   top: 100%;
   left: 70%;
-  background-color: #e3fff6;
-  color: rgb(163, 240, 111);
+  background-color: #223838;
+  color: #0e1616;
   width: 20%;
   height: 20%;
   font-size: 3vh;
   border-radius: 0px 0px 10px 10px;
+  border: 0px;
+  font-family: 'Montserrat', sans-serif;
 }
 .confirmButton:hover{
-  background-color: #f0e1ba;
-  color: rgb(240, 221, 111);
+  background-color:#2f4d4d;
 }
   
 .readyButton{
@@ -63,6 +67,7 @@
   background-color: #a6d67f; 
   border: none; 
   border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
 }
 .readyButton:hover{
   background-color: #99d666; 
@@ -70,13 +75,13 @@
 }
 
 @keyframes fadeOut {
-  0% {opacity:1;}
+  0% {opacity:0.7;}
   100% {opacity:0;}
 }
   
 @keyframes fadeIn {
   0% {opacity:0;}
-  100% {opacity:1;}
+  100% {opacity:0.7;}
 }
 
 @keyframes turnToGame{

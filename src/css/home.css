@@ -13,24 +13,25 @@
     font-size: 15px;
     position: absolute;
     transform: translate(-50%, -50%);
-
+    color: #0e1616;
+    font-family: 'Montserrat', sans-serif;
   }
   
 #newGame {
-    background-color: #baeb9a;
+    background-color:#284141;
     top: 40%;
     left: 50%;
 }
 #newGame:hover {
-    background-color: #97d86b;
+    background-color:#2f4d4d;
 }
 #joinGame {
     top: 60%;
     left: 50%;
-    background-color: #97d86b;
+    background-color:  #284141;
 }
 #joinGame:hover {
-    background-color: #7ec250;
+    background-color: #2f4d4d;
 }
 @keyframes turnToGame{
     from {

@@ -2,7 +2,7 @@ import joinRoom from './joinRoom.js'
 import inputStrip from './inputStrip.js'
 import setupWord from './setupWord.js'
 import runGame from './gameRunning/runGame.js'
-import readyUp from './gameRunning/readyButton.js'
+import readyUp from './gameRunning/readyUp.js'
 
 const socket = io();
 
@@ -33,8 +33,7 @@ function setupUser(){
 async function startMatch() {
    var notEndGame = true
    while (notEndGame) {
-      var word = await setupWord()
-      socket.emit('word', word)
+      var word = await setupWord(socket)
       var oppStrip = await readyUp(socket, word)
       await runGame(oppStrip, socket, word)
    }

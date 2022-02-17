@@ -21,7 +21,6 @@ class inputStrip {
     newInputBox(collumn, verticalOffset) {
         var input = document.createElement('input')
         this.surroundingBox.appendChild(input)
-        input.style.backgroundColor = "white"
         input.classList.add('letterInput')
 
         // var newHeight = parseInt(input.style.width.substr(0,2))*this.boundingBox.style.width/100

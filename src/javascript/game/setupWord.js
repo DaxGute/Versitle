@@ -3,13 +3,13 @@ import inputStrip from './inputStrip.js'
 const wordPrompt = document.getElementById("wordPrompt")
 const confirmWord= document.getElementById("confirmWord")
 
-async function setupWord(){
+async function setupWord(socket){
     wordPrompt.style.display = "block"
     wordPrompt.style.animation = "fadeIn ease-in-out 1s forwards"
 
     var wordStrip = new inputStrip("newWordStrip", 0)
 
-    var word = await waitForWord(wordStrip)
+    var word = await waitForWord(wordStrip, socket)
 
     wordPrompt.style.animation = "turnToGame ease-in-out 1s forwards"
     wordPrompt.addEventListener("animationend", function wordFunc(){
@@ -28,22 +28,28 @@ async function setupWord(){
         this.removeEventListener('animationend', wordFunc);
     })
 
+    confirmWord.style.animation = "fadeOut ease-in-out 0.1s forwards"
+    confirmWord.addEventListener('animationend', function confirmFunc(){ //this technically})
+        confirmWord.style.display = "none"
+        this.removeEventListener('animationend', wordFunc);
+    })
+
     return word
 }
 
-function waitForWord(newWordStrip){
+function waitForWord(newWordStrip, socket){
     return new Promise((resolve) => {
         confirmWord.addEventListener("click", () => {
             var word = newWordStrip.getStripInfo();
-            if (isWordValid(word)){
-                resolve(word)
-            }
+            socket.emit('word', word)
+            socket.on("wordCheck", (canPass) => {
+                if (canPass) {
+                    resolve(word)
+                }
+            })
+            
         })
     })
-}
-
-function isWordValid(word){
-    return true
 }
 
 export default setupWord

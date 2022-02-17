@@ -9,13 +9,15 @@ var word = ""
 // a new wordle should be added each time so perhaps your wordle should change each time
 async function runGame(oppStrip, socket, theWord) {
     return new Promise((resolve) => {
+        socket.emit("playerStarted")
         word = theWord
         yourWordle = oppStrip
         typingWordle = new inputStrip("wordleBoxes", 10)
         typingWordle.fadeInAnim()
         typingWordle.getInputBox(0).focus()
         startTimer()
-        socket.on("getWord", () => {
+
+        socket.on("getWordGuess", () => {
             socket.emit('wordGuess', typingWordle.getStripInfo())
         })
 
@@ -49,7 +51,7 @@ async function runGame(oppStrip, socket, theWord) {
     })
 }
 
-var yourScore = document.getElementById("yourScore")
+var yourScore = document.getElementById("youScore")
 var oppScore = document.getElementById("oppScore")
 
 function updateScore(score, theirScore) {

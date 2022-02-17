@@ -12,7 +12,7 @@ async function readyUp(socket, word){
     })
 
     var oppStrip = await waitForOtherPlayer(socket, word)
-    await startGame()
+    await preMatchStart()
     return oppStrip
     
 }
@@ -33,7 +33,7 @@ function waitForOtherPlayer(socket, word){
 
 var countdown
 var interval
-function startGame(){
+function preMatchStart(){
     return new Promise((resolve) => {
         countdown = 4
         readyButton.value = "3"
@@ -42,8 +42,8 @@ function startGame(){
             readyButton.innerHTML = "Game Starts: " + countdown + "s"
             if (countdown <= 0){
                 readyPrompt.style.display = "none"
-                resolve()
                 clearInterval(interval)
+                resolve()
             }
         
         }

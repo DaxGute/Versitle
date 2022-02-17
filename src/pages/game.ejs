@@ -1,13 +1,17 @@
 <!doctype html>
 <html lang="en">
     <link rel="stylesheet" href="css/game.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <head>
     </head>
     <body style="margin:0px; background-color: #284141;">
-        <canvas style = "width: 100%; height: 100%; position: fixed;" id = "backgroundCanvas"></canvas>
+        <canvas style = "width: 100%; height: 100%; position: fixed; filter: blur(10px)" id = "backgroundCanvas"></canvas>
         <div style="display: none; opacity: 0;"  class="smallPrompt" id="wordPrompt">
-            <h2 style="text-align: center;"> Select Your Word </h2>
+            <h2 style="text-align: center; font-family: 'Montserrat', sans-serif;"> Select Your Word </h2>
             <div id="newWordStrip" style="width:100%; height: 100%; position: absolute; top: 35%">
             </div>
             <button class="confirmButton" id="confirmWord"> Confirm? </button>

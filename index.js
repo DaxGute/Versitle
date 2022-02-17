@@ -29,6 +29,8 @@ app.get('/code', (req, res) => {
 **/
 
 const io = require("socket.io")(server)
+const isWordReal = require('./src/javascript/home/checkDict');
+const e = require("cors");
 io.on('connection', socket => {
   socket.word = ""
   socket.ready = false
@@ -47,21 +49,17 @@ io.on('connection', socket => {
     }
 
     //sorta lazy coding to decide whether or not a player should be let in
-    try{
-      if (io.sockets.adapter.rooms.get(room).size < 2){
-        var partnerSocket
-        for (const clientId of io.sockets.adapter.rooms.get(room)) {
-          var partnerSocket = io.sockets.sockets.get(clientId);
-        }
-        socket.partner = partnerSocket
-        socket.partner.partner = socket
-        playerCountsCorrect()
-      } else {
-        //too many players
-        socket.emit('playerCount', false)
-      }
-    }catch (err){
+    if (io.sockets.adapter.rooms.get(room) == undefined) {
       playerCountsCorrect()
+    }else if (io.sockets.adapter.rooms.get(room).size < 2){
+      for (const clientId of io.sockets.adapter.rooms.get(room)) {
+        socket.partner = io.sockets.sockets.get(clientId);
+      }
+      socket.partner.partner = socket
+      playerCountsCorrect()
+    } else {
+      //too many players
+      socket.emit('playerCount', false)
     }
 
 
@@ -74,7 +72,13 @@ io.on('connection', socket => {
       }
     })
     socket.on('word', (newWord) => {
-      socket.word = newWord
+      if (isWordReal(newWord)) {
+        console.log("words" + newWord)
+        socket.word = newWord
+        socket.emit('wordCheck', true)
+      }else{
+        socket.emit('wordCheck', false)
+      }
     })
   })
 
@@ -86,67 +90,72 @@ io.on('connection', socket => {
 })
 
 function runGame(socket){
-  var timerInterval
-  setTimeout(() => {
-    timerInterval = setInterval(() => {
-      socket.emit('getWord')
+  socket.on('playerStarted', () => {
+    socket.timerInterval
+
+    
+    socket.timerInterval = setInterval(() => {
+      socket.emit('getWordGuess')
     }, 10000)
-  }, 10000)
+  
 
-  socket.on('wordGuess', (word) => {
-    for (var i = 0; i < 5 - word.length; i++) {
-      word += " "
-    }
-    socket.numMatch = -1
-    //make sure that it is 6 characters long
-    var newString = ""
-    var partWordList = []
-    var guessWordList = []
-    for (var i = 0; i < 5; i++){
-      partWordList.push(socket.partner.word.substring(i, i+1))
-      guessWordList.push(word.substring(i, i+1))
-    }
+    socket.on('wordGuess', (word) => {
+      for (var i = 0; i < 5 - word.length; i++) {
+        word += " "
+      }
+      socket.numMatch = -1
+      //make sure that it is 6 characters long
+      var newString = ""
+      var partWordList = []
+      var guessWordList = []
+      for (var i = 0; i < 5; i++){
+        partWordList.push(socket.partner.word.substring(i, i+1))
+        guessWordList.push(word.substring(i, i+1))
+      }
 
-    var numMatch = 0 
-    for (var i = 0; i < 5; i++){
-      if (partWordList[i] == guessWordList[i]) {
-        numMatch++ 
-        newString += guessWordList[i].toUpperCase()
-      }else{
-        var guessFrag = guessWordList[i]
-        var guessFragNotFound = true
-        for (var j = 0; j < 5; j++) {
-          if (guessFrag == partWordList[j]) {
-            newString += guessFrag
-            guessFragNotFound = false
+      var numMatch = 0 
+      for (var i = 0; i < 5; i++){
+        if (partWordList[i] == guessWordList[i]) {
+          numMatch++ 
+          newString += guessWordList[i].toUpperCase()
+        }else{
+          var guessFrag = guessWordList[i]
+          var guessFragNotFound = true
+          for (var j = 0; j < 5; j++) {
+            if (guessFrag == partWordList[j]) {
+              newString += guessFrag
+              guessFragNotFound = false
+            }
+          }
+          if (guessFragNotFound) {
+            newString += "_"
           }
         }
-        if (guessFragNotFound) {
-          newString += "_"
-        }
       }
-    }
-    socket.numMatch = numMatch
+      socket.numMatch = numMatch
 
-    socket.emit("hitMap", newString)
-    socket.to(socket.room).emit("oppHitMap", newString)
-    if (socket.partner.numMatch != -1 && socket.numMatch == 5){
-      socket.win += 1
-      if (socket.numMatch > socket.partner.numMatch) {
-        socket.emit("win", socket.win, socket.partner.win)
-        socket.to(socket.room).emit("lose", socket.partner.win, socket.win)
-      }else if (socket.numMatch < socket.partner.numMatch) {
-        socket.partner.win += 1
-        socket.emit("lose", socket.win, socket.partner.win)
-        socket.to(socket.room).emit("win", socket.partner.win, socket.win)
-      }else {
-        socket.win += 0.5
-        socket.partner.win += 0.5
-        socket.emit("draw", socket.win, socket.partner.win)
-        socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
+      socket.emit("hitMap", newString)
+      socket.to(socket.room).emit("oppHitMap", newString)
+
+
+      if (socket.partner.numMatch != -1 && socket.numMatch == 5){
+        if (socket.numMatch > socket.partner.numMatch) {
+          socket.emit("win", socket.win, socket.partner.win)
+          socket.to(socket.room).emit("lose", socket.partner.win, socket.win)
+        }else if (socket.numMatch < socket.partner.numMatch) {
+          socket.partner.win += 1
+          socket.emit("lose", socket.win, socket.partner.win)
+          socket.to(socket.room).emit("win", socket.partner.win, socket.win)
+        }else {
+          socket.win += 1
+          socket.win += 0.5
+          socket.partner.win += 0.5
+          socket.emit("draw", socket.win, socket.partner.win)
+          socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
+        }
+        clearInterval(socket.timerInterval)
       }
-      clearInterval(timerInterval)
-    }
-    
+      
+    })
   })
 }
