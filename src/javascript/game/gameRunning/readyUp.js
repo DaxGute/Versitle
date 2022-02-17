@@ -7,6 +7,7 @@ async function readyUp(socket, word){
     readyButton.addEventListener("click", () => {
         readyButton.disabled = true
         readyButton.style.backgroundColor = "#365858"
+        readyButton.style.color = "black"
         readyButton.innerHTML = "Waiting on Other Player"
         socket.emit("ready")
     })

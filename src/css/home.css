@@ -36,18 +36,16 @@
 
 ::selection {
     background: #365858;
-  }
-  
+}
+
 @keyframes turnToGame{
     from {
-        top:25%; 
-        border-radius: 20px;
-        height: 50%;
+        filter: blur(0px);
+        opacity: 0.7;
     }
     to {
-        top:35%; 
-        border-radius: 50px;
-        height: 30%;
+        filter: blur(100px);
+        opacity: 0;
     }
 }
 @keyframes fadeOut {

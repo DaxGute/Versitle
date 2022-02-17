@@ -18,7 +18,7 @@ async function runGame(oppStrip, socket, theWord) {
         document.getElementById("scores").style.display = "block"
         document.getElementById("scores").style.animation = "fadeIn ease-in-out 0.1s forwards"
 
-        typingWordle = new inputStrip("wordleBoxes", 30)
+        typingWordle = new inputStrip("wordleBoxes", 10)
         typingWordle.fadeInAnim()
         typingWordle.getInputBox(0).focus()
         startTimer()
@@ -29,14 +29,16 @@ async function runGame(oppStrip, socket, theWord) {
 
         socket.on("hitMap", (yourHitMap) => {
             updateYourHitmap(yourHitMap)
-            typingWordle.disableInput()
-            typingWordle = new inputStrip("wordleBoxes", 30)
-            typingWordle.fadeInAnim()
-            typingWordle.getInputBox(0).focus() 
-            startTimer()
         })
         socket.on("oppHitMap", (oppHitMap) => {
             updateTheirHitmap(oppHitMap)
+        })
+        socket.on("nextRound", () => {
+            typingWordle.disableInput()
+            typingWordle = new inputStrip("wordleBoxes", 10)
+            typingWordle.fadeInAnim()
+            typingWordle.getInputBox(0).focus() 
+            startTimer()
         })
 
         socket.on("win", (yourScore, theirScore) => {

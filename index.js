@@ -137,7 +137,7 @@ function runGame(socket){
       socket.to(socket.room).emit("oppHitMap", newString)
 
 
-      if (socket.partner.numMatch != -1 && socket.numMatch == 5){
+      if (socket.partner.numMatch == 5 || socket.numMatch == 5){
         if (socket.numMatch > socket.partner.numMatch) {
           socket.emit("win", socket.win, socket.partner.win)
           socket.to(socket.room).emit("lose", socket.partner.win, socket.win)
@@ -153,6 +153,8 @@ function runGame(socket){
           socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
         }
         clearInterval(socket.timerInterval)
+      }else{
+        socket.emit("nextRound")
       }
       
     })

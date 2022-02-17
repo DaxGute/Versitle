@@ -9,8 +9,9 @@ class inputStrip {
         // a submit button should also be added
         this.surroundingBox = document.createElement('div')
         this.surroundingBox.style.width = "100%"
-        this.surroundingBox.style.height = "80%"
+        this.surroundingBox.style.height = "120px"
         this.surroundingBox.style.display = "relative"
+        this.surroundingBox.style.paddingTop = "" + verticalOffset + "px"
         this.surroundingBox.style.top = "0%"
         this.surroundingBox.style.left = "0%"
         this.boundingBox.prepend(this.surroundingBox)
@@ -27,7 +28,6 @@ class inputStrip {
         // console.log(newHeight)
         // input.style.height = "" + newHeight + "px"
         input.style.left = "" + (100/6*(collumn+1)) - 7.5 + "%"
-        // input.style.top = "" + verticalOffset + "px"
         input.maxLength = 1
         const BIRTHNUMBER_ALLOWED_CHARS_REGEXP = /\p{L}/u ;
         input.addEventListener('keydown', (e) => {

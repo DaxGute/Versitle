@@ -31,16 +31,17 @@ async function setupWord(socket){
     confirmWord.style.animation = "fadeOut ease-in-out 0.1s forwards"
     confirmWord.addEventListener('animationend', function confirmFunc(){ //this technically})
         confirmWord.style.display = "none"
-        this.removeEventListener('animationend', wordFunc);
+        this.removeEventListener('animationend', confirmFunc);
     })
 
     return word
 }
 
+var word
 function waitForWord(newWordStrip, socket){
     return new Promise((resolve) => {
         confirmWord.addEventListener("click", () => {
-            var word = newWordStrip.getStripInfo();
+            word = newWordStrip.getStripInfo();
             socket.emit('word', word)
             socket.on("wordCheck", (canPass) => {
                 if (canPass) {

@@ -69,6 +69,7 @@
   border-radius: 1000px;
   font-family: 'Montserrat', sans-serif;
   opacity: 1;
+  font-size: 3vh
 }
 .readyButton:hover{
   background-color: #2f4d4d; 
