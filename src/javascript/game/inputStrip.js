@@ -41,7 +41,7 @@ class inputStrip {
                     input.value = ""
                 }
             }else if (input.value.length == 1) {
-                if (this.currentBox < this.line.length) {
+                if (this.currentBox < this.line.length - 1) {
                     this.line[this.currentBox + 1].focus()
                     this.currentBox = this.currentBox + 1
                 }
