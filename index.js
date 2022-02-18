@@ -136,7 +136,8 @@ function runGame(socket){
       socket.emit("hitMap", newString)
       socket.to(socket.room).emit("oppHitMap", newString)
 
-
+      console.log("Partner: " + socket.partner.numMatch)
+      console.log("You:     " + socket.numMatch)
       if ((socket.partner.numMatch == 5 || socket.numMatch == 5) && (socket.numMatch!=undefined && socket.partner.numMatch!=undefined)){
         if (socket.numMatch > socket.partner.numMatch) {
           socket.emit("win", socket.win, socket.partner.win)
@@ -156,7 +157,6 @@ function runGame(socket){
         clearInterval(socket.timerInterval)
       }else{
         socket.emit("nextRound")
-        socket.numMatch = -1
       }
     })
   })

@@ -5,6 +5,7 @@ function resetMatch(){
     document.getElementById('wordleBoxes').innerHTML = ""
     document.getElementById('yourWord').innerHTML = ""
     const newWord = document.getElementById('newWordStrip')
+    console.log("hello")
     newWord.removeChild(newWord.firstChild)
 
 

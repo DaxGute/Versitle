@@ -8,6 +8,7 @@ async function joinRoom(){
     joinPrompt.style.animation = "fadeIn ease-in-out 1s forwards"
 
     var joinStrip = new inputStrip("joinCodeStrip", 0)
+    joinStrip.getInputBox(0).focus()
 
     var code = await waitForJoin(joinStrip)
 
