@@ -11,11 +11,16 @@ function resetMatch(){
     oppBox.removeChild(oppBox.childNodes[0])
 
     const newWord = document.getElementById('newWordStrip')
-    newWord.removeChild(newWord.childNodes[0])
+    while(newWord.firstChild) {
+        newWord.removeChild(newWord.firstChild);
+    }
 
-    document.getElementById('confirmJoin').style.display = "block"
-    document.getElementById('confirmJoin').style.opacity = 1
-
+    document.getElementById("readyButton").disabled = false
+    document.getElementById("readyButton").innerHTML = "Press if Ready"
+    document.getElementById("readyButton").style.animation = ""
+    document.getElementById("readyPrompt").style.animation = "fadeIn ease-in 0.01s forwards"
+    document.getElementById("readyPrompt").style.display = "block"
+    
     document.getElementById("wordTimer").style.animation = "fadeOut ease-in-out 0.1s forwards"
 
     const gamePrompt = document.getElementById('gamePrompt');

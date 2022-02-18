@@ -28,26 +28,23 @@ async function setupWord(socket){
         this.removeEventListener('animationend', wordFunc);
     })
 
-    confirmWord.style.animation = "fadeOut ease-in-out 0.1s forwards"
-    confirmWord.addEventListener('animationend', function confirmFunc(){ //this technically})
-        confirmWord.style.display = "none"
-        this.removeEventListener('animationend', confirmFunc);
-    })
-
     return word
 }
 
 var word
 function waitForWord(newWordStrip, socket){
     return new Promise((resolve) => {
-        confirmWord.addEventListener("click", () => {
-            word = newWordStrip.getStripInfo();
-            socket.emit('word', word)
-            socket.on("wordCheck", (canPass) => {
-                if (canPass) {
-                    resolve(word)
-                }
-            })
+        document.addEventListener("keypress", function keyFunc(e) {
+            if (e.code == "Enter"){
+                word = newWordStrip.getStripInfo();
+                socket.emit('word', word)
+                socket.on("wordCheck", (canPass) => {
+                    if (canPass) {
+                        this.removeEventListener("keypress", keyFunc)
+                        resolve(word)
+                    }
+                })
+            }
             
         })
     })

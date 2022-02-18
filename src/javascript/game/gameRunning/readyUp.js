@@ -6,8 +6,6 @@ const readyButton = document.getElementById("readyButton")
 async function readyUp(socket, word){
     readyButton.addEventListener("click", () => {
         readyButton.disabled = true
-        readyButton.style.backgroundColor = "#365858"
-        readyButton.style.color = "black"
         readyButton.innerHTML = "Waiting on Other Player"
         socket.emit("ready")
     })
@@ -26,18 +24,16 @@ function waitForOtherPlayer(socket, word){
             readyButton.style.animation = "countdown ease-in-out 5s forwards"
             readyPrompt.addEventListener('animationend', function readyFunc() {
                 readyPrompt.style.display = "none"
-                this.removeEventListener('animationend', readyFunc);
-            })
+            }, {once: true})
             resolve(oppStrip)
         })
     })
 }
 
-var countdown
-var interval
 function preMatchStart(){
     return new Promise((resolve) => {
-        countdown = 4
+        var countdown = 4
+        var interval
         readyButton.value = "3"
         var decrementCount = function decrementCount(){
             countdown --

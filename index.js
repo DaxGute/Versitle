@@ -152,6 +152,7 @@ function runGame(socket){
           socket.emit("draw", socket.win, socket.partner.win)
           socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
         }
+        socket.ready = false
         clearInterval(socket.timerInterval)
       }else{
         socket.emit("nextRound")

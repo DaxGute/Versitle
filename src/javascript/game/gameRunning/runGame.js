@@ -96,12 +96,12 @@ function handleGamResult(){
     gameResultBack.style.animation = "fadeIn ease-in-out 0.1s forwards"
     gameResult.style.display = "block"
     gameResult.style.animation = "showBanner ease-in-out 1s forwards"
-    gameResult.addEventListener("keypress", function resultFunc(e){
+    document.addEventListener("keypress", function resultFunc(e){
         if (e.code == "Enter"){
-            gameResult.style.animation = "fadeOut ease-in-out 0.1s forwards"
             gameResult.style.display = "none"
+            gameResultBack.style.display = "none"
 
-            this.removeEventListener("click", resultFunc)
+            this.removeEventListener("keypress", resultFunc)
         }
     })
 }
@@ -132,7 +132,14 @@ function updateTheirHitmap(partnerHitMap){
             if (hitMapLetter == hitMapLetter.toUpperCase()) {
                 box.style.backgroundColor = "green"
             }else{
-                box.style.backgroundColor = "orange"
+                //needs fixing
+                for (var j=0; j<5; j ++){
+                    if (hitMapLetter == word.substring(j,j+1)){
+                        var orangeBox = yourWordle.getInputBox(j)
+                        orangeBox.style.backgroundColor = "orange"
+                    }
+                }
+                
             }
         }else{
             box.style.backgroundColor = "#2f4d4d"

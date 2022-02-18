@@ -22,10 +22,13 @@ async function joinRoom(){
 // this is really interesting how promises can be used
 function waitForJoin(joinStrip){
     return new Promise((resolve) => {
-        confirmJoin.addEventListener("click", () => {
-            var code = joinStrip.getStripInfo();
-            if (isCodeValid(code)){
-                resolve(code)
+        document.addEventListener("keypress", function keyFunc(e) {
+            if (e.code == "Enter"){
+                var code = joinStrip.getStripInfo();
+                if (isCodeValid(code)){
+                    this.removeEventListener("keypress", keyFunc);
+                    resolve(code)
+                }
             }
         })
     });
