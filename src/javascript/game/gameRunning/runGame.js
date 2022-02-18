@@ -1,5 +1,6 @@
 import inputStrip from '../inputStrip.js' 
 import startTimer from './clock.js'
+import resetMatch from './resetMatch.js'
 
 const yourWord = document.getElementById("yourWord")
 var yourWordle;
@@ -44,16 +45,19 @@ async function runGame(oppStrip, socket, theWord) {
         socket.on("win", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             win()
+            resetMatch()
             resolve()
         })
         socket.on("lose", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             loss()
+            resetMatch()
             resolve()
         })
         socket.on("draw", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             draw()
+            resetMatch()
             resolve()
         })
     })
@@ -68,33 +72,37 @@ function updateScore(score, theirScore) {
 }
 
 var gameResult = document.getElementById("gameResult")
+var gameResultBack = document.getElementById("gameResultBack")
 var resultText = document.getElementById("resultText")
 
 function win(){
     resultText.innerHTML = "You Won!"
-    gameResult.style.display = "block"
-    gameResult.style.animation = "showBanner ease-in-out 1s forwards"
-    gameResult.addEventListener("animationend", function resultFunc(){
-        setTimeout(() => {gameResult.style.display = "none"}, 2000)
-        this.removeEventListener("animationend", resultFunc)
-    })
+    gameResult.style.backgroundColor = "#ccffcc"
+    handleGamResult()
 }
 function draw(){
     resultText.innerHTML = "Draw!"
-    gameResult.style.display = "block"
-    gameResult.style.animation = "showBanner ease-in-out 1s forwards"
-    gameResult.addEventListener("animationend", function resultFunc(){
-        setTimeout(() => {gameResult.style.display = "none"}, 2000)
-        this.removeEventListener("animationend", resultFunc)
-    })
+    gameResult.style.backgroundColor = "#ffffe6"
+    handleGamResult()
 }
 function loss(){
     resultText.innerHTML = "You Lose :("
+    gameResult.style.backgroundColor = "#ffb3b3"
+    handleGamResult()
+}
+
+function handleGamResult(){
+    gameResultBack.style.display = "block"
+    gameResultBack.style.animation = "fadeIn ease-in-out 0.1s forwards"
     gameResult.style.display = "block"
     gameResult.style.animation = "showBanner ease-in-out 1s forwards"
-    gameResult.addEventListener("animationend", function resultFunc(){
-        setTimeout(() => {gameResult.style.display = "none"}, 2000)
-        this.removeEventListener("animationend", resultFunc)
+    gameResult.addEventListener("keypress", function resultFunc(e){
+        if (e.code == "Enter"){
+            gameResult.style.animation = "fadeOut ease-in-out 0.1s forwards"
+            gameResult.style.display = "none"
+
+            this.removeEventListener("click", resultFunc)
+        }
     })
 }
 

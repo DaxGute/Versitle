@@ -23,7 +23,7 @@
             <button class="confirmButton" id="confirmJoin"> Confirm </button>
         </div>
         <div style = "display: none; opacity: 0" class="gamePrompt" id="gamePrompt">
-            <h2 style="text-align: center; position: relative; top: 0%; ; display: none" id="title"> Wordle Multiplayer </h2>
+            <h2 style="text-align: center; position: relative; top: 0%; display: none" id="title"> Wordle Multiplayer </h2>
             <div id="wordleBoxes" style = "position: absolute; height: 35%; width: 100%; top: 10%; overflow-y: auto">
             </div>
             <div style="position: absolute; top: 50%; left: 60%; border-radius: 5px; width: 20%; border: 1px solid slategrey; text-align: center; display: none" id= "scores">
@@ -37,8 +37,11 @@
         <div id="readyPrompt" style="position: absolute; width: 100%; height: 100%; background-color: rgba(0,0,0,.5);; top: 0; display: none;">
             <button id="readyButton" class="readyButton"> Press if Ready </button>
         </div>
-        <div id="gameResult" style="position: absolute; width: 120%; height: 30%; top: 20%; left: -10%; display: none;">
-            <h2 id="resultText" style="text-align: center; padding-top: 10px;">  </h2>
+        <div id="gameResultBack" style="position: absolute; width: 100%; height: 100%; background-color: rgba(0,0,0,.5);; top: 0; display: none;">
+            <div id="gameResult" style="position: absolute; width: 120%; height: 30%; top: 20%; left: -10%; display: none;">
+                <h2 id="resultText" style="text-align: center; padding-top: 5vh;">  </h2>
+                <p id="resultText" style="text-align: center; padding-top: 1px;"> (Press [RETURN] to continue) </p>
+            </div>
         </div>
 
     </body>

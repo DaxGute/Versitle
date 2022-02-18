@@ -103,7 +103,7 @@ function runGame(socket){
         word += " "
       }
       socket.numMatch = -1
-      //make sure that it is 6 characters long
+      //make sure that it is 5 characters long
       var newString = ""
       var partWordList = []
       var guessWordList = []
@@ -121,7 +121,7 @@ function runGame(socket){
           var guessFrag = guessWordList[i]
           var guessFragNotFound = true
           for (var j = 0; j < 5; j++) {
-            if (guessFrag == partWordList[j]) {
+            if (guessFrag == partWordList[j] && guessFragNotFound) {
               newString += guessFrag
               guessFragNotFound = false
             }
