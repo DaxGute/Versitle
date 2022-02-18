@@ -83,6 +83,7 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     if (socket.partner != undefined){
+      socket.to(socket.room).emit("win", socket.partner.win, socket.win)
       socket.partner.partner = undefined
     }
   })
@@ -90,14 +91,12 @@ io.on('connection', socket => {
 
 function runGame(socket){
   socket.on('playerStarted', () => {
-    socket.timerInterval
 
-    
     socket.timerInterval = setInterval(() => {
       socket.emit('getWordGuess')
     }, 10000)
   
-
+    // what if the player just has the window stop responding
     socket.on('wordGuess', (word) => {
       for (var i = 0; i < 5 - word.length; i++) {
         word += " "
@@ -136,10 +135,16 @@ function runGame(socket){
       socket.emit("hitMap", newString)
       socket.to(socket.room).emit("oppHitMap", newString)
 
-      console.log("Partner: " + socket.partner.numMatch)
-      console.log("You:     " + socket.numMatch)
+      // console.log("Partner: " + socket.partner.numMatch)
+      // console.log("You:     " + socket.numMatch)
       if ((socket.partner.numMatch == 5 || socket.numMatch == 5) && (socket.numMatch!=undefined && socket.partner.numMatch!=undefined)){
+        clearInterval(socket.timerInterval)
+        clearInterval(socket.partner.timerInterval)
+        socket.ready = false
+        socket.partner.ready = false
+        console.log("you ready: " + socket.ready)
         if (socket.numMatch > socket.partner.numMatch) {
+          socket.win += 1
           socket.emit("win", socket.win, socket.partner.win)
           socket.to(socket.room).emit("lose", socket.partner.win, socket.win)
         }else if (socket.numMatch < socket.partner.numMatch) {
@@ -147,14 +152,11 @@ function runGame(socket){
           socket.emit("lose", socket.win, socket.partner.win)
           socket.to(socket.room).emit("win", socket.partner.win, socket.win)
         }else {
-          socket.win += 1
           socket.win += 0.5
           socket.partner.win += 0.5
           socket.emit("draw", socket.win, socket.partner.win)
           socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
         }
-        socket.ready = false
-        clearInterval(socket.timerInterval)
       }else{
         socket.emit("nextRound")
       }

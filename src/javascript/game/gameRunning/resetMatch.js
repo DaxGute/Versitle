@@ -5,13 +5,17 @@ function resetMatch(){
     document.getElementById('wordleBoxes').innerHTML = ""
     document.getElementById('yourWord').innerHTML = ""
     const newWord = document.getElementById('newWordStrip')
-    console.log("hello")
     newWord.removeChild(newWord.firstChild)
 
 
     document.getElementById("readyButton").disabled = false
     document.getElementById("readyButton").innerHTML = "Press if Ready"
     document.getElementById("readyButton").style.animation = ""
+    document.getElementById("readyButton").style.animation = ""
+
+    // document.getElementById("readyPrompt").style.display = "block"
+    document.getElementById("readyPrompt").style.animation = ""
+
     
     document.getElementById("wordTimer").style.animation = "fadeOut ease-in-out 0.1s forwards"
 

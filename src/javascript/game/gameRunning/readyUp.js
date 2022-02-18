@@ -4,10 +4,12 @@ const readyPrompt = document.getElementById("readyPrompt")
 const readyButton = document.getElementById("readyButton")
 
 async function readyUp(socket, word){
-    readyButton.addEventListener("click", () => {
+    readyButton.addEventListener("click", function buttFunc() {
         readyButton.disabled = true
         readyButton.innerHTML = "Waiting on Other Player"
         socket.emit("ready")
+        console.log("this bitch said it was ready")
+        this.removeEventListener("click", buttFunc)
     })
 
     var oppStrip = await waitForOtherPlayer(socket, word)
@@ -23,8 +25,10 @@ function waitForOtherPlayer(socket, word){
             readyPrompt.style.animation = "fadeOut ease-in 5s forwards"
             readyButton.style.animation = "countdown ease-in-out 5s forwards"
             readyPrompt.addEventListener('animationend', function readyFunc() {
+                console.log("disapearing")
                 readyPrompt.style.display = "none"
-            }, {once: true})
+                this.removeEventListener('animationend', readyFunc)
+            })
             resolve(oppStrip)
         })
     })
