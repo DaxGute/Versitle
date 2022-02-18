@@ -7,7 +7,6 @@ async function setupWord(socket){
     wordPrompt.style.display = "block"
     wordPrompt.style.animation = "fadeIn ease-in-out 1s forwards"
 
-    console.log("yououou")
     var wordStrip = new inputStrip("newWordStrip", 0)
 
     var word = await waitForWord(wordStrip, socket)

@@ -4,7 +4,8 @@ function resetMatch(){
 
     document.getElementById('wordleBoxes').innerHTML = ""
     document.getElementById('yourWord').innerHTML = ""
-    document.getElementById('newWordStrip').innerHTML = ""
+    const newWord = document.getElementById('newWordStrip')
+    newWord.removeChild(newWord.firstChild)
 
 
     document.getElementById("readyButton").disabled = false

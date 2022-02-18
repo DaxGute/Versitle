@@ -102,7 +102,7 @@ function runGame(socket){
       for (var i = 0; i < 5 - word.length; i++) {
         word += " "
       }
-      socket.numMatch = -1
+      socket.numMatch = undefined
       //make sure that it is 5 characters long
       var newString = ""
       var partWordList = []
@@ -137,7 +137,7 @@ function runGame(socket){
       socket.to(socket.room).emit("oppHitMap", newString)
 
 
-      if (socket.partner.numMatch == 5 || socket.numMatch == 5){
+      if ((socket.partner.numMatch == 5 || socket.numMatch == 5) && (socket.numMatch!=undefined && socket.partner.numMatch!=undefined)){
         if (socket.numMatch > socket.partner.numMatch) {
           socket.emit("win", socket.win, socket.partner.win)
           socket.to(socket.room).emit("lose", socket.partner.win, socket.win)
@@ -156,8 +156,8 @@ function runGame(socket){
         clearInterval(socket.timerInterval)
       }else{
         socket.emit("nextRound")
+        socket.numMatch = -1
       }
-      
     })
   })
 }
