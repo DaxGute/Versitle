@@ -1,18 +1,11 @@
 function resetMatch(socket) {
-    socket.removeAllListeners("win")
-    socket.removeAllListeners("lose")
-    socket.removeAllListeners("draw")
-    socket.removeAllListeners("getWordGuess")
-    socket.removeAllListeners("hitMap")
-    socket.removeAllListeners("oppHitMap")
-    socket.removeAllListeners("nextRound")
-
     document.getElementById("wordForRound").style.color = "aqua"
     document.getElementById("wordForRound").style.animation = "fadeFrames ease-in-out 3s forwards"
 
     var yourScore = document.getElementById("youScore").innerHTML
     var theirScore = document.getElementById("oppScore").innerHTML
     var currentRound = 1 + parseInt(yourScore.substring(5, yourScore.length)) + parseInt(theirScore.substring(5, theirScore.length))
+    document.getElementById("wordForRound").innerHTML = "[ROUND " + currentRound + "]"
 
     document.getElementById("title").style.animation = "fadeOut ease-in-out 0.1s forwards"
     document.getElementById("scores").style.animation = "fadeOut ease-in-out 0.1s forwards"

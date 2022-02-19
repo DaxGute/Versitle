@@ -157,7 +157,7 @@ function runGame(socket){
           socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
         }
         socket.numMatch = undefined
-        socket.numMatch = undefined
+        socket.partner.numMatch = undefined
       }else{
         socket.emit("nextRound")
       }

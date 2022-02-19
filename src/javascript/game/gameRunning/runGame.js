@@ -13,6 +13,8 @@ async function runGame(oppStrip, socket, theWord) {
         word = theWord
         yourWordle = oppStrip
 
+        var onCurrentRound = true
+
         document.getElementById("title").style.display = "block"
         document.getElementById("title").style.animation = "fadeIn ease-in-out 0.1s forwards"
         document.getElementById("scores").style.display = "block"
@@ -23,37 +25,59 @@ async function runGame(oppStrip, socket, theWord) {
         typingWordle.getInputBox(0).focus()
         startTimer()
 
-        socket.on("getWordGuess", () => {
-            socket.emit('wordGuess', typingWordle.getStripInfo())
+        socket.on("getWordGuess", function wordGuessFunc() {
+            if (onCurrentRound) {
+                socket.emit('wordGuess', typingWordle.getStripInfo())
+            }else{
+                socket.off("getWordGuess", wordGuessFunc)
+            }
         })
 
-        socket.on("hitMap", (yourHitMap) => {
-            updateYourHitmap(yourHitMap)
+        socket.on("hitMap", function youHitFunc(yourHitMap) {
+            if (onCurrentRound) {
+                updateYourHitmap(yourHitMap)
+            }else{
+                socket.off("hitMap", youHitFunc)
+            }
         })
-        socket.on("oppHitMap", (oppHitMap) => {
-            updateTheirHitmap(oppHitMap)
+        socket.on("oppHitMap", function oppHitFunc(oppHitMap) {
+            if (onCurrentRound) {
+                updateTheirHitmap(oppHitMap)
+            }else{
+                socket.off("oppHitMap", oppHitFunc)
+            }
         })
-        socket.on("nextRound", () => {
-            typingWordle.disableInput()
-            typingWordle = new inputStrip("wordleBoxes", 10)
-            typingWordle.fadeInAnim()
-            typingWordle.getInputBox(0).focus() 
-            startTimer()
+        socket.on("nextRound", function roundFunc() {
+            if (onCurrentRound) {
+                typingWordle.disableInput()
+                typingWordle = new inputStrip("wordleBoxes", 10)
+                typingWordle.fadeInAnim()
+                typingWordle.getInputBox(0).focus() 
+                startTimer()
+            }else{
+                socket.off("nextRound", roundFunc)
+            }
         })
 
-        socket.on("win", (yourScore, theirScore) => {
+        socket.once("win", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             win()
+            handleGamResult()
+            onCurrentRound = false
             resolve()
         })
-        socket.on("lose", (yourScore, theirScore) => {
+        socket.once("lose", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             loss()
+            handleGamResult()
+            onCurrentRound = false
             resolve()
         })
-        socket.on("draw", (yourScore, theirScore) => {
+        socket.once("draw", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             draw()
+            handleGamResult()
+            onCurrentRound = false
             resolve()
         })
     })
@@ -74,17 +98,14 @@ var resultText = document.getElementById("resultText")
 function win(){
     resultText.innerHTML = "You Won!"
     gameResult.style.backgroundColor = "#ccffcc"
-    handleGamResult()
 }
 function draw(){
     resultText.innerHTML = "Draw!"
     gameResult.style.backgroundColor = "#ffffe6"
-    handleGamResult()
 }
 function loss(){
     resultText.innerHTML = "You Lose :("
     gameResult.style.backgroundColor = "#ffb3b3"
-    handleGamResult()
 }
 
 function handleGamResult(){
