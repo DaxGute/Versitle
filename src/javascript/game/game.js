@@ -3,6 +3,7 @@ import inputStrip from './inputStrip.js'
 import setupWord from './setupWord.js'
 import runGame from './gameRunning/runGame.js'
 import readyUp from './gameRunning/readyUp.js'
+import resetMatch from './gameRunning/resetMatch.js'
 
 const socket = io();
 
@@ -33,6 +34,7 @@ function setupUser(){
 async function startMatch() {
    var notEndGame = true
    while (notEndGame) {
+      resetMatch(socket)
       var word = await setupWord(socket)
       var oppStrip = await readyUp(socket, word)
       await runGame(oppStrip, socket, word)

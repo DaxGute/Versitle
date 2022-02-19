@@ -7,6 +7,12 @@ function resetMatch(socket) {
     socket.removeAllListeners("oppHitMap")
     socket.removeAllListeners("nextRound")
 
+    document.getElementById("wordForRound").style.color = "aqua"
+    document.getElementById("wordForRound").style.animation = "fadeFrames ease-in-out 3s forwards"
+
+    var yourScore = document.getElementById("youScore").innerHTML
+    var theirScore = document.getElementById("oppScore").innerHTML
+    var currentRound = 1 + parseInt(yourScore.substring(5, yourScore.length)) + parseInt(theirScore.substring(5, theirScore.length))
 
     document.getElementById("title").style.animation = "fadeOut ease-in-out 0.1s forwards"
     document.getElementById("scores").style.animation = "fadeOut ease-in-out 0.1s forwards"
@@ -36,18 +42,14 @@ function resetMatch(socket) {
     // document.getElementById("readyPrompt").style.display = "block"
     document.getElementById("readyPrompt").style.animation = ""
     
-    gamePrompt.removeChild(document.getElementById("wordTimer"))
-    var wordTimer = document.createElement("canvas")
-    wordTimer.id = "wordTimer"
-    wordTimer.width = 1000
-    wordTimer.height = 1000
-    gamePrompt.insertBefore(wordTimer, gamePrompt.children[3]);
+    document.getElementById("wordTimer").style.animation = "fadeOut ease-in-out 0.1s forwards"
+    // var wordTimer = document.createElement("canvas")
+    // wordTimer.id = "wordTimer"
+    // wordTimer.width = 1000
+    // wordTimer.height = 1000
+    // gamePrompt.insertBefore(wordTimer, gamePrompt.children[3]);
 
-    gamePrompt.style.animation = 'fadeOut ease-in-out 1s forwards';
-    gamePrompt.addEventListener('animationend', function gameFunc() {
-        gamePrompt.style.display = 'none';
-        this.removeEventListener('animationend', gameFunc);
-    }) 
+    // gamePrompt.style.animation = 'fadeOut ease-in-out 1s forwards';
 }
 
 export default resetMatch

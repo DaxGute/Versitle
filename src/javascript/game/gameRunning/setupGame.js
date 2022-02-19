@@ -8,11 +8,11 @@ var wordleStrip;
 function setupGame(word){
     yourWordStrip = new inputStrip("yourWord", 0)
     yourWordStrip.setStripInfo(word)
-    console.log(word)
     yourWordStrip.disableInput()
-    yourWord.style.animation = "fadeIn ease-in-out 0.5s forwards 1s"
-    yourWord.style.animation = "lowerWord ease-in-out 1s forwards 1s" //I j have ti on delay here because I am lazy
-    yourWord.addEventListener("animationend", function wordFunc(){
+    window.getComputedStyle(yourWord).animation; 
+    document.getElementById("gamePrompt").lastChild.style.animation = "fadeIn ease-in-out 0.5s forwards 1s"
+    document.getElementById("gamePrompt").lastChild.style.animation = "lowerWord ease-in-out 1s forwards 1s" //I j have ti on delay here because I am lazy
+    document.getElementById("gamePrompt").lastChild.addEventListener("animationend", function wordFunc(){
         document.getElementById("wordTimer").style.animation = "fadeIn ease-in-out 0.1s forwards"
         this.removeEventListener('animationend', wordFunc);
     })

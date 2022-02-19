@@ -20,7 +20,6 @@ async function readyUp(socket, word){
 function waitForOtherPlayer(socket, word){
     return new Promise((resolve) => {
         socket.once("startGame", () => {
-            console.log("ur shitting me: " + word)
             var oppStrip = setupGame(word)
             readyPrompt.style.animation = "fadeOut ease-in 5s forwards"
             readyButton.style.animation = "countdown ease-in-out 5s forwards"

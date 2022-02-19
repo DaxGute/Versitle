@@ -1,6 +1,5 @@
 import inputStrip from '../inputStrip.js' 
 import startTimer from './clock.js'
-import resetMatch from './resetMatch.js'
 
 const yourWord = document.getElementById("yourWord")
 var yourWordle;
@@ -45,19 +44,16 @@ async function runGame(oppStrip, socket, theWord) {
         socket.on("win", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             win()
-            resetMatch(socket)
             resolve()
         })
         socket.on("lose", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             loss()
-            resetMatch(socket)
             resolve()
         })
         socket.on("draw", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             draw()
-            resetMatch(socket)
             resolve()
         })
     })
@@ -92,6 +88,7 @@ function loss(){
 }
 
 function handleGamResult(){
+    document.getElementById('gamePrompt').style.display = "none"
     gameResultBack.style.display = "block"
     gameResultBack.style.animation = "fadeIn ease-in-out 0.1s forwards"
     gameResult.style.display = "block"
