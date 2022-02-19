@@ -30,14 +30,17 @@ function setupUser(){
 
    socket.emit('joinRoom', location.hash)
 }
-
+var isFirstTime = true
 async function startMatch() {
    var notEndGame = true
    while (notEndGame) {
       resetMatch(socket)
       var word = await setupWord(socket)
       var oppStrip = await readyUp(socket, word)
-      await runGame(oppStrip, socket, word)
+      await runGame(oppStrip, socket, word, isFirstTime)
+      if (isFirstTime) {
+         isFirstTime = false
+      }
    }
 }
 

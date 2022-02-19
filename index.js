@@ -42,6 +42,7 @@ io.on('connection', socket => {
     room = room.substring(1, room.length)
     socket.room = room
 
+
     var playerCountsCorrect = () => {
       socket.join(room)
       socket.emit('playerCount', true)
@@ -90,77 +91,82 @@ io.on('connection', socket => {
 })
 
 function runGame(socket){
+  var firstTime = true
   socket.on('playerStarted', () => {
 
     socket.timerInterval = setInterval(() => {
       socket.emit('getWordGuess')
     }, 10000)
+
   
-    // what if the player just has the window stop responding
-    socket.on('wordGuess', (word) => {
-      for (var i = 0; i < 5 - word.length; i++) {
-        word += " "
-      }
-      socket.numMatch = undefined
-      //make sure that it is 5 characters long
-      var newString = ""
-      var partWordList = []
-      var guessWordList = []
-      for (var i = 0; i < 5; i++){
-        partWordList.push(socket.partner.word.substring(i, i+1))
-        guessWordList.push(word.substring(i, i+1))
-      }
-
-      var numMatch = 0 
-      for (var i = 0; i < 5; i++){
-        if (partWordList[i] == guessWordList[i]) {
-          numMatch++ 
-          newString += guessWordList[i].toUpperCase()
-        }else{
-          var guessFrag = guessWordList[i]
-          var guessFragNotFound = true
-          for (var j = 0; j < 5; j++) {
-            if (guessFrag == partWordList[j] && guessFragNotFound) {
-              newString += guessFrag
-              guessFragNotFound = false
-            }
-          }
-          if (guessFragNotFound) {
-            newString += "_"
-          }
-        }
-      }
-      socket.numMatch = numMatch
-
-      socket.emit("hitMap", newString)
-      socket.to(socket.room).emit("oppHitMap", newString)
-
-      // console.log("Partner: " + socket.partner.numMatch)
-      // console.log("You:     " + socket.numMatch)
-      if ((socket.partner.numMatch == 5 || socket.numMatch == 5) && (socket.numMatch!=undefined && socket.partner.numMatch!=undefined)){
-        clearInterval(socket.timerInterval)
-        clearInterval(socket.partner.timerInterval)
-        socket.ready = false
-        socket.partner.ready = false
-        if (socket.numMatch > socket.partner.numMatch) {
-          socket.win += 1
-          socket.emit("win", socket.win, socket.partner.win)
-          socket.to(socket.room).emit("lose", socket.partner.win, socket.win)
-        }else if (socket.numMatch < socket.partner.numMatch) {
-          socket.partner.win += 1
-          socket.emit("lose", socket.win, socket.partner.win)
-          socket.to(socket.room).emit("win", socket.partner.win, socket.win)
-        }else {
-          socket.win += 0.5
-          socket.partner.win += 0.5
-          socket.emit("draw", socket.win, socket.partner.win)
-          socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
+    if (firstTime){
+      socket.on('wordGuess', (word) => {
+        for (var i = 0; i < 5 - word.length; i++) {
+          word += " "
         }
         socket.numMatch = undefined
-        socket.partner.numMatch = undefined
-      }else{
-        socket.emit("nextRound")
-      }
-    })
+        //make sure that it is 5 characters long
+        var newString = ""
+        var partWordList = []
+        var guessWordList = []
+        for (var i = 0; i < 5; i++){
+          partWordList.push(socket.partner.word.substring(i, i+1))
+          guessWordList.push(word.substring(i, i+1))
+        }
+
+        var numMatch = 0 
+        for (var i = 0; i < 5; i++){
+          if (partWordList[i] == guessWordList[i]) {
+            numMatch++ 
+            newString += guessWordList[i].toUpperCase()
+          }else{
+            var guessFrag = guessWordList[i]
+            var guessFragNotFound = true
+            for (var j = 0; j < 5; j++) {
+              if (guessFrag == partWordList[j] && guessFragNotFound) {
+                newString += guessFrag
+                guessFragNotFound = false
+              }
+            }
+            if (guessFragNotFound) {
+              newString += "_"
+            }
+          }
+        }
+        socket.numMatch = numMatch
+
+        socket.emit("hitMap", newString)
+        socket.to(socket.room).emit("oppHitMap", newString)
+
+        // console.log("Partner: " + socket.partner.numMatch)
+        // console.log("You:     " + socket.numMatch)
+        if ((socket.partner.numMatch == 5 || socket.numMatch == 5) && (socket.numMatch!=undefined && socket.partner.numMatch!=undefined)){
+          clearInterval(socket.timerInterval)
+          clearInterval(socket.partner.timerInterval)
+          socket.ready = false
+          socket.partner.ready = false
+          if (socket.numMatch > socket.partner.numMatch) {
+            socket.win += 1
+            socket.emit("win", socket.win, socket.partner.win)
+            socket.to(socket.room).emit("lose", socket.partner.win, socket.win)
+          }else if (socket.numMatch < socket.partner.numMatch) {
+            socket.partner.win += 1
+            socket.emit("lose", socket.win, socket.partner.win)
+            socket.to(socket.room).emit("win", socket.partner.win, socket.win)
+          }else {
+            socket.win += 0.5
+            socket.partner.win += 0.5
+            socket.emit("draw", socket.win, socket.partner.win)
+            socket.to(socket.room).emit("draw", socket.partner.win, socket.win)
+          }
+          socket.numMatch = undefined
+          socket.partner.numMatch = undefined
+        }else{
+          console.log("nextRound BB")
+          socket.emit("nextRound")
+        }
+      })
+      firstTime = false
+    }
   })
 }

@@ -7,13 +7,11 @@ const wordle = document.getElementById("wordleBoxes")
 var typingWordle;
 var word = ""
 // a new wordle should be added each time so perhaps your wordle should change each time
-async function runGame(oppStrip, socket, theWord) {
+async function runGame(oppStrip, socket, theWord, isFirstTime) {
     return new Promise((resolve) => {
         socket.emit("playerStarted")
         word = theWord
         yourWordle = oppStrip
-
-        var onCurrentRound = true
 
         document.getElementById("title").style.display = "block"
         document.getElementById("title").style.animation = "fadeIn ease-in-out 0.1s forwards"
@@ -25,59 +23,44 @@ async function runGame(oppStrip, socket, theWord) {
         typingWordle.getInputBox(0).focus()
         startTimer()
 
-        socket.on("getWordGuess", function wordGuessFunc() {
-            if (onCurrentRound) {
+        if (isFirstTime) { // can't be bothered with listeners right about now
+            console.log("isfirstTime is true")
+            socket.on("getWordGuess", function wordGuessFunc() {
+                console.log("asking for guess word")
                 socket.emit('wordGuess', typingWordle.getStripInfo())
-            }else{
-                socket.off("getWordGuess", wordGuessFunc)
-            }
-        })
+            })
 
-        socket.on("hitMap", function youHitFunc(yourHitMap) {
-            if (onCurrentRound) {
+            socket.on("hitMap", function youHitFunc(yourHitMap) {
                 updateYourHitmap(yourHitMap)
-            }else{
-                socket.off("hitMap", youHitFunc)
-            }
-        })
-        socket.on("oppHitMap", function oppHitFunc(oppHitMap) {
-            if (onCurrentRound) {
+            })
+            socket.on("oppHitMap", function oppHitFunc(oppHitMap) {
                 updateTheirHitmap(oppHitMap)
-            }else{
-                socket.off("oppHitMap", oppHitFunc)
-            }
-        })
-        socket.on("nextRound", function roundFunc() {
-            if (onCurrentRound) {
+            })
+            socket.on("nextRound", function roundFunc() {
                 typingWordle.disableInput()
                 typingWordle = new inputStrip("wordleBoxes", 10)
                 typingWordle.fadeInAnim()
                 typingWordle.getInputBox(0).focus() 
                 startTimer()
-            }else{
-                socket.off("nextRound", roundFunc)
-            }
-        })
+            })
+        }
 
         socket.once("win", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             win()
             handleGamResult()
-            onCurrentRound = false
             resolve()
         })
         socket.once("lose", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             loss()
             handleGamResult()
-            onCurrentRound = false
             resolve()
         })
         socket.once("draw", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             draw()
             handleGamResult()
-            onCurrentRound = false
             resolve()
         })
     })

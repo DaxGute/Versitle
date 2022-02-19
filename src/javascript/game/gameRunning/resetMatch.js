@@ -4,7 +4,7 @@ function resetMatch(socket) {
 
     var yourScore = document.getElementById("youScore").innerHTML
     var theirScore = document.getElementById("oppScore").innerHTML
-    var currentRound = 1 + parseInt(yourScore.substring(5, yourScore.length)) + parseInt(theirScore.substring(5, theirScore.length))
+    var currentRound = 1 + parseInt(parseFloat(yourScore.substring(5, yourScore.length)) + parseFloat(theirScore.substring(5, theirScore.length)))
     document.getElementById("wordForRound").innerHTML = "[ROUND " + currentRound + "]"
 
     document.getElementById("title").style.animation = "fadeOut ease-in-out 0.1s forwards"
