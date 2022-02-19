@@ -24,9 +24,7 @@ async function runGame(oppStrip, socket, theWord, isFirstTime) {
         startTimer()
 
         if (isFirstTime) { // can't be bothered with listeners right about now
-            console.log("isfirstTime is true")
             socket.on("getWordGuess", function wordGuessFunc() {
-                console.log("asking for guess word")
                 socket.emit('wordGuess', typingWordle.getStripInfo())
             })
 

@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, './src')))
 
 const server = http.createServer(app) 
 
-server.listen(3000, () => {
+server.listen(8080, () => {
   console.log("Server Running")
 })
 
@@ -162,7 +162,6 @@ function runGame(socket){
           socket.numMatch = undefined
           socket.partner.numMatch = undefined
         }else{
-          console.log("nextRound BB")
           socket.emit("nextRound")
         }
       })
@@ -170,3 +169,5 @@ function runGame(socket){
     }
   })
 }
+
+module.exports = server;
