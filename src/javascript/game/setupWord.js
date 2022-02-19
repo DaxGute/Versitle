@@ -42,6 +42,7 @@ function waitForWord(newWordStrip, socket){
                 socket.on("wordCheck", (canPass) => {
                     if (canPass) {
                         this.removeEventListener("keypress", keyFunc)
+                        socket.removeEventListener("wordCheck")
                         resolve(word)
                     }
                 })

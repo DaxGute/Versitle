@@ -11,9 +11,8 @@
     <body style="margin:0px; background-color: #284141;">
         <canvas style = "width: 100%; height: 100%; position: fixed; filter: blur(10px)" id = "backgroundCanvas"></canvas>
         <div style="display: none; opacity: 0;"  class="smallPrompt" id="wordPrompt">
-            <h2 style="text-align: center; font-family: 'Montserrat', sans-serif;"> Select Your Word </h2>
-            <div id="newWordStrip" style="width:100%; height: 100%; position: absolute; top: 35%">
-            </div>
+            <h2 style="text-align: center; font-family: 'Montserrat', sans-serif;"> Word for <bold id="wordForRound" style="color:aqua">[ROUND 1]</bold>: </h2>
+            <div id="newWordStrip"></div>
             <p style="text-align: center; font-size: 1vh; position: absolute; bottom: 0; right:10%">Press [RETURN] to Continue</p>
         </div>
         <div style = "display: none; opacity: 0" class="smallPrompt" id="joinPrompt">
@@ -24,14 +23,13 @@
         </div>
         <div style = "display: none; opacity: 0" class="gamePrompt" id="gamePrompt">
             <h2 style="text-align: center; position: relative; top: 0%; display: none" id="title"> Wordle Multiplayer </h2>
-            <div id="wordleBoxes" style = "position: absolute; height: 35%; width: 100%; top: 10%; overflow-y: auto">
-            </div>
+            <div id="wordleBoxes"></div>
             <div style="position: absolute; top: 50%; left: 60%; border-radius: 5px; width: 20%; border: 1px solid slategrey; text-align: center; display: none" id= "scores">
                 <p id="youScore"> YOU: 0 </p>
                 <p id="oppScore"> OPP: 0 </p>
             </div>
-            <canvas id="wordTimer" style="position: absolute; top: 45%; left: 20%; width: 30%" width="1000" height="1000"></canvas>
-            <div id="yourWord" style="position: absolute; height: 20%; width: 100%; top: 35%; left: 0%"></div>
+            <canvas id="wordTimer"></canvas>
+            <div id="yourWord"></div>
             
         </div>
         <div id="readyPrompt" style="position: absolute; width: 100%; height: 100%; background-color: rgba(0,0,0,.5);; top: 0; display: none;">

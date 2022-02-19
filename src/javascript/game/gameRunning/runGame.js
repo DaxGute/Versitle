@@ -45,19 +45,19 @@ async function runGame(oppStrip, socket, theWord) {
         socket.on("win", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             win()
-            resetMatch()
+            resetMatch(socket)
             resolve()
         })
         socket.on("lose", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             loss()
-            resetMatch()
+            resetMatch(socket)
             resolve()
         })
         socket.on("draw", (yourScore, theirScore) => {
             updateScore(yourScore, theirScore)
             draw()
-            resetMatch()
+            resetMatch(socket)
             resolve()
         })
     })

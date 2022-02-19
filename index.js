@@ -36,7 +36,7 @@ io.on('connection', socket => {
   socket.ready = false
   socket.room = ""
   socket.partner = undefined
-  socket.won = 0
+  socket.win = 0
 
   socket.on('joinRoom', (room) => {
     room = room.substring(1, room.length)
@@ -142,7 +142,6 @@ function runGame(socket){
         clearInterval(socket.partner.timerInterval)
         socket.ready = false
         socket.partner.ready = false
-        console.log("you ready: " + socket.ready)
         if (socket.numMatch > socket.partner.numMatch) {
           socket.win += 1
           socket.emit("win", socket.win, socket.partner.win)

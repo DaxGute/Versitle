@@ -8,7 +8,6 @@ async function readyUp(socket, word){
         readyButton.disabled = true
         readyButton.innerHTML = "Waiting on Other Player"
         socket.emit("ready")
-        console.log("this bitch said it was ready")
         this.removeEventListener("click", buttFunc)
     })
 
@@ -20,15 +19,11 @@ async function readyUp(socket, word){
 
 function waitForOtherPlayer(socket, word){
     return new Promise((resolve) => {
-        socket.on("startGame", () => {
+        socket.once("startGame", () => {
+            console.log("ur shitting me: " + word)
             var oppStrip = setupGame(word)
             readyPrompt.style.animation = "fadeOut ease-in 5s forwards"
             readyButton.style.animation = "countdown ease-in-out 5s forwards"
-            readyPrompt.addEventListener('animationend', function readyFunc() {
-                console.log("disapearing")
-                readyPrompt.style.display = "none"
-                this.removeEventListener('animationend', readyFunc)
-            })
             resolve(oppStrip)
         })
     })
