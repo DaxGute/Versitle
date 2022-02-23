@@ -4,8 +4,13 @@ import setupWord from './setupWord.js'
 import runGame from './gameRunning/runGame.js'
 import readyUp from './gameRunning/readyUp.js'
 import resetMatch from './gameRunning/resetMatch.js'
+import instructions from "../instructions.js"
 
 const socket = io();
+
+document.getElementById("helpButton").addEventListener("click", ()=>{
+   instructions()
+})
 
 inputStrip.setWindow(document)
 
